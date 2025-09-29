@@ -20,7 +20,7 @@ function Card({ theme, category, date }) {
                 </a>
                 <div className="card__date">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
-                    <path d="M10.5625 2.03125H2.4375..." stroke="#94A6BE" strokeWidth="0.8" />
+                    <path d="M10.5625 2.03125H2.4375" stroke="#94A6BE" strokeWidth="0.8" />
                 </svg>
                 <p>{date}</p>
                 </div>
