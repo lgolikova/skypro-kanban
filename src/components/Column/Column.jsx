@@ -1,15 +1,23 @@
 import Card from '../Card/Card'
 
-function Column({ title }) {
+function Column({ title, cards }) {
     return (
         <div className="main__column column">
         <div className="column__title">
             <p>{title}</p>
         </div>
         <div className="cards">
-            <Card theme="_orange" category="Web Design" date="30.10.23" />
-            <Card theme="_green" category="Research" date="30.10.23" />
-            <Card theme="_purple" category="Copywriting" date="30.10.23" />
+        {cards.length > 0 ? (cards.map((card) => (
+            <Card
+                key={card.id}
+                topic={card.topic}
+                title={card.title}
+                date={card.date}
+            />
+        ))
+        ) : (
+            <p>Нет задач</p>
+        )}
         </div>
         </div>
     )
