@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Column from '../Column/Column'
-import {cardList} from "../../data"
+import Column from '../Column/Column';
+import {cardList} from "../../data";
+import SContainer from "../Container.styled";
+import styled from "styled-components";
 
 function Main() {
 
@@ -17,7 +19,7 @@ function Main() {
     if (isLoading) {
         return (
             <main className="main">
-                <div className="container">
+                <SContainer>
                     <div
                         style={{
                         display: "flex",
@@ -31,7 +33,7 @@ function Main() {
                     >
                         Данные загружаются...
                     </div>
-                </div>
+                </SContainer>
             </main>
         );
     }
@@ -46,19 +48,19 @@ function Main() {
 
     return (
         <main className="main">
-            <div className="container">
+            <SContainer>
                 <div className="main__block">
-                <div className="main__content">
-                    {statuses.map((status) => (
-                    <Column
-                        key={status}
-                        title={status}
-                        cards={cardList.filter((card) => card.status === status)}
-                    />
-                    ))}
+                    <div className="main__content">
+                        {statuses.map((status) => (
+                        <Column
+                            key={status}
+                            title={status}
+                            cards={cardList.filter((card) => card.status === status)}
+                        />
+                        ))}
+                    </div>
                 </div>
-                </div>
-            </div>
+            </SContainer>
         </main>
     );
 }
