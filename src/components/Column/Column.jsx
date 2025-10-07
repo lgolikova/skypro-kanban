@@ -1,25 +1,26 @@
-import Card from '../Card/Card'
+import Card from '../Card/Card';
+import { SMainColumn, SColumnTitle, SCards } from './Column.styled'
 
 function Column({ title, cards }) {
     return (
-        <div className="main__column column">
-        <div className="column__title">
-            <p>{title}</p>
-        </div>
-        <div className="cards">
-        {cards.length > 0 ? (cards.map((card) => (
-            <Card
-                key={card.id}
-                topic={card.topic}
-                title={card.title}
-                date={card.date}
-            />
-        ))
-        ) : (
-            <p>Нет задач</p>
-        )}
-        </div>
-        </div>
+        <SMainColumn>
+            <SColumnTitle>
+                <p>{title}</p>
+            </SColumnTitle>
+            <SCards>
+            {cards.length > 0 ? (cards.map((card) => (
+                <Card
+                    key={card.id}
+                    topic={card.topic}
+                    title={card.title}
+                    date={card.date}
+                />
+            ))
+            ) : (
+                <p>Нет задач</p>
+            )}
+            </SCards>
+        </SMainColumn>
     )
 }
 
