@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Column from '../Column/Column';
 import {cardList} from "../../data";
 import SContainer from "../Container.styled";
-import styled from "styled-components";
+import { SMain, SMainBlock, SMainContent, SLoadingMessage } from "./Main.styled";
 
 function Main() {
 
@@ -18,23 +18,13 @@ function Main() {
 
     if (isLoading) {
         return (
-            <main className="main">
+            <SMain>
                 <SContainer>
-                    <div
-                        style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "60vh",
-                        fontSize: "20px",
-                        color: "#94A6BE",
-                        fontWeight: "500",
-                        }}
-                    >
+                    <SLoadingMessage>
                         Данные загружаются...
-                    </div>
+                    </SLoadingMessage>
                 </SContainer>
-            </main>
+            </SMain>
         );
     }
 
@@ -47,10 +37,10 @@ function Main() {
     ];
 
     return (
-        <main className="main">
+        <SMain>
             <SContainer>
-                <div className="main__block">
-                    <div className="main__content">
+                <SMainBlock>
+                    <SMainContent>
                         {statuses.map((status) => (
                         <Column
                             key={status}
@@ -58,10 +48,10 @@ function Main() {
                             cards={cardList.filter((card) => card.status === status)}
                         />
                         ))}
-                    </div>
-                </div>
+                    </SMainContent>
+                </SMainBlock>
             </SContainer>
-        </main>
+        </SMain>
     );
 }
 
