@@ -1,14 +1,14 @@
 import React from "react";
-import { SCardsItem, SCard, SCardGroup, SCardContent, SCardTitle, SCardDate, SCardBtn } from './Card.styled'
+import { SCardsItem, SCard, SCardGroup, SCardContent, SCardTitle, SCardDate, SCardBtn, SCardTheme } from './Card.styled'
 
 function Card({ topic, title, date }) {
     return (
         <SCardsItem>
             <SCard>
                 <SCardGroup>
-                    <div className={`card__theme _${topic.toLowerCase().replace(" ", "-")}`}>
+                    <SCardTheme topic={topic}>
                         <p>{topic}</p>
-                    </div>
+                    </SCardTheme>
                     <a href="#popBrowse" target="_self">
                     <SCardBtn>
                         <div></div><div></div><div></div>

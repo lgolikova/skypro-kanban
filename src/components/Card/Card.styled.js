@@ -1,4 +1,5 @@
 import styled, { keyframes } from "styled-components";
+import { theme } from "../theme";
 
 const cardAnimation = keyframes`
     0% {
@@ -88,4 +89,24 @@ export const SCardBtn = styled.div`
         border-radius: 50%;
         background-color: #94a6be;
     }
+`;
+
+export const SCardTheme = styled.div`
+    width: auto;
+    height: 20px;
+    padding: 5px 14px;
+    border-radius: 18px;
+
+    p {
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 10px;
+    }
+
+    background-color: ${({ topic }) =>
+        theme.topics[topic.toLowerCase()]?.background ||
+        theme.topics.default.background};
+
+    color: ${({ topic }) =>
+        theme.topics[topic.toLowerCase()]?.color || theme.topics.default.color};
 `;
