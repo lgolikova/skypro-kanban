@@ -70,3 +70,15 @@ export const SHeaderUserLink = styled.a`
         padding: 0;
     }
 `;
+
+export const SHeaderLogo = styled.img`
+    width: 85px;
+`;
+
+export const SHeaderLogoWrapper = styled.div`
+    display: ${({ isVisible }) => (isVisible ? "block" : "none")};
+
+    a {
+        display: inline-block;
+    }
+`;

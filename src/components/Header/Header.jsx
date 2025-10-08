@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import PopUser from "../popups/PopUser/PopUser";
 import PopExit from "../popups/PopExit/PopExit";
 import SContainer from "../Container.styled";
-import { SHeader, SHeaderBlock, SHeaderNav, SHeaderBtnNew, SHeaderUserLink } from './Header.styled';
+import { SHeader, SHeaderBlock, SHeaderNav, SHeaderBtnNew, SHeaderUserLink, SHeaderLogo, SHeaderLogoWrapper } from './Header.styled';
 
 
-function Header() {
+function Header({ isDarkTheme }) {
 
     const [isUserOpen, setIsUserOpen] = useState(false);
 
@@ -13,20 +13,21 @@ function Header() {
         setIsUserOpen(!isUserOpen);
     };
 
+
     return (
         <SHeader>
             <SContainer>
                 <SHeaderBlock>
-                    <div className="header__logo _show _light">
+                    <SHeaderLogoWrapper isVisible={!isDarkTheme}>
                         <a href="/" target="_self">
-                        <img src="images/logo.png" alt="logo" />
+                            <SHeaderLogo src="images/logo.png" alt="logo" />
                         </a>
-                    </div>
-                    <div className="header__logo _dark">
+                    </SHeaderLogoWrapper>
+                    <SHeaderLogoWrapper isVisible={isDarkTheme}>
                         <a href="/" target="_self">
-                        <img src="images/logo_dark.png" alt="logo" />
+                            <SHeaderLogo src="images/logo_dark.png" alt="logo" />
                         </a>
-                    </div>
+                    </SHeaderLogoWrapper>
 
                     <SHeaderNav>
                         <SHeaderBtnNew>
