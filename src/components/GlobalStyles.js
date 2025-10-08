@@ -17,7 +17,22 @@ const GlobalStyles = createGlobalStyle`
     height: 100%;
     font-family: "Roboto", Arial, Helvetica, sans-serif;
     color: #000000;
-}
+    }
+
+    a,
+    a:visited {
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    button {
+        cursor: pointer;
+        outline: none;
+    }
+
+    ul li {
+        list-style: none;
+    }
 `;
 
 export default GlobalStyles;
