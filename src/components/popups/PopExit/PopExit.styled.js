@@ -14,6 +14,10 @@ export const SPopExit = styled.div`
     :target {
         display: block;
     }
+
+    &:target {
+        display: block;
+    }
 `;
 
 export const SPopExitContainer = styled.div`
@@ -48,5 +52,78 @@ export const SPopExitTtl = styled.div`
         line-height: 30px;
         letter-spacing: -0.4px;
         margin-bottom: 20px;
+    }
+`;
+
+export const SPopExitFormGroup = styled.div`
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+`;
+
+export const SPopExitYes = styled.button`
+    width: 153px;
+    height: 30px;
+    background-color: #565eef;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    letter-spacing: -0.14px;
+    color: #ffffff;
+    margin-right: 10px;
+
+    a {
+        width: 100%;
+        height: 100%;
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &:hover {
+        background-color: #33399b;
+    }
+`;
+
+export const SPopExitNo = styled.button`
+    width: 153px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 4px;
+    border: 0.7px solid var(--palette-navy-60, #565eef);
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 21px;
+    font-weight: 500;
+    letter-spacing: -0.14px;
+    color: #ffffff;
+
+    a {
+        width: 100%;
+        height: 100%;
+        color: #565eef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &:hover {
+        background-color: #33399b;
+        color: #ffffff;
+    }
+
+    &:hover a {
+        color: #ffffff;
     }
 `;
