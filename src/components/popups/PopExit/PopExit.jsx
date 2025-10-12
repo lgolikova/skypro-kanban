@@ -1,15 +1,31 @@
 import React from "react";
+import {SPopExit, SPopExitContainer, SPopExitBlock, SPopExitTtl, SPopExitFormGroup, SPopExitYes, SPopExitNo} from './PopExit.styled';
 
 function PopExit() {
     return (
-        <div className="header__pop-exit pop-exit" id="popExit">
-        <p>Вы точно хотите выйти?</p>
-        <div className="pop-exit__buttons">
-            <button className="_hover03">Отмена</button>
-            <button className="_hover03">Выйти</button>
-        </div>
-        </div>
+        <SPopExit id="popExit">
+            <SPopExitContainer>
+                <SPopExitBlock>
+                    <SPopExitTtl>
+                        <h2>Выйти из аккаунта?</h2>
+                    </SPopExitTtl>
+                    <form id="formExit" action="#">
+                        <SPopExitFormGroup>
+                            <SPopExitYes id="exitYes">
+                                <a href="modal/signin.html">Да, выйти</a>
+                            </SPopExitYes>
+                            <SPopExitNo id="exitNo">
+                                <a href="main.html">Нет, остаться</a>
+                            </SPopExitNo>
+                        </SPopExitFormGroup>
+                    </form>
+                </SPopExitBlock>
+            </SPopExitContainer>
+        </SPopExit>
     );
 }
 
 export default PopExit;
+
+
+

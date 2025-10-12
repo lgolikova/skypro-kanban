@@ -1,31 +1,61 @@
 import React from "react";
+import Calendar from "../../Calendar/Calendar";
 
 function PopBrowse() {
     return (
-        <div id="popBrowse" className="popup">
-        {/* <div className="popup__content">
-            <div className="popup__header">
-            <h2>Просмотр задачи</h2>
-            <a href="#" className="popup__close">×</a>
-            </div>
+        <div className="pop-browse" id="popBrowse">
+            <div className="pop-browse__container">
+            <div className="pop-browse__block">
+                <div className="pop-browse__content">
+                <div className="pop-browse__top-block">
+                    <h3 className="pop-browse__ttl">Название задачи</h3>
+                    <div className="categories__theme theme-top _orange _active-category">
+                    <p className="_orange">Web Design</p>
+                    </div>
+                </div>
 
-            <div className="popup__body">
-            <p><strong>Название задачи:</strong> Сделать разметку</p>
-            <p><strong>Описание:</strong> Верстка карточек и колонок</p>
+                <div className="pop-browse__status status">
+                    <p className="status__p subttl">Статус</p>
+                    <div className="status__themes">
+                    <div className="status__theme _hide"><p>Без статуса</p></div>
+                    <div className="status__theme _gray"><p className="_gray">Нужно сделать</p></div>
+                    <div className="status__theme _hide"><p>В работе</p></div>
+                    <div className="status__theme _hide"><p>Тестирование</p></div>
+                    <div className="status__theme _hide"><p>Готово</p></div>
+                    </div>
+                </div>
 
-            <div className="popup__calendar">
-                <h3>Дата выполнения</h3>
-                <input type="date" />
-            </div>
-            </div>
+                <div className="pop-browse__wrap">
+                    <form className="pop-browse__form form-browse" id="formBrowseCard" action="#">
+                    <div className="form-browse__block">
+                        <label htmlFor="textArea01" className="subttl">Описание задачи</label>
+                        <textarea className="form-browse__area" id="textArea01" readOnly placeholder="Введите описание задачи..."></textarea>
+                    </div>
+                    </form>
 
-            <div className="popup__footer">
-            <button type="button" className="btn">Сохранить</button>
-            <button type="button" className="btn">Отмена</button>
+                    <Calendar />
+                </div>
+
+                <div className="theme-down__categories theme-down">
+                    <p className="categories__p subttl">Категория</p>
+                    <div className="categories__theme _orange _active-category">
+                    <p className="_orange">Web Design</p>
+                    </div>
+                </div>
+
+                <div className="pop-browse__btn-browse">
+                    <div className="btn-group">
+                    <button className="btn-browse__edit _btn-bor _hover03"><a href="#">Редактировать задачу</a></button>
+                    <button className="btn-browse__delete _btn-bor _hover03"><a href="#">Удалить задачу</a></button>
+                    </div>
+                    <button className="btn-browse__close _btn-bg _hover01"><a href="#">Закрыть</a></button>
+                </div>
+                </div>
             </div>
-        </div> */}
+            </div>
         </div>
     );
 }
 
 export default PopBrowse;
+

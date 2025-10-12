@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import PopUser from "../popups/PopUser/PopUser";
 import PopExit from "../popups/PopExit/PopExit";
+import SContainer from "../Container.styled";
+import { SHeader, SHeaderBlock, SHeaderNav, SHeaderBtnNew, SHeaderUserLink, SHeaderLogo, SHeaderLogoWrapper } from './Header.styled';
 
-function Header() {
+
+function Header({ isDarkTheme }) {
 
     const [isUserOpen, setIsUserOpen] = useState(false);
 
@@ -10,34 +13,35 @@ function Header() {
         setIsUserOpen(!isUserOpen);
     };
 
-    return (
-        <header className="header">
-        <div className="container">
-            <div className="header__block">
-            <div className="header__logo _show _light">
-                <a href="/" target="_self">
-                <img src="images/logo.png" alt="logo" />
-                </a>
-            </div>
-            <div className="header__logo _dark">
-                <a href="/" target="_self">
-                <img src="images/logo_dark.png" alt="logo" />
-                </a>
-            </div>
 
-            <nav className="header__nav">
-                <button className="header__btn-main-new _hover01" id="btnMainNew">
-                <a href="#popNewCard">Создать новую задачу</a>
-                </button>
-                <a href="#user-set-target" className="header__user _hover02" onClick={handleUserClick}>
-                Ivan Ivanov
-                </a>
-                <PopUser isOpen={isUserOpen} />
-                <PopExit />
-            </nav>
-            </div>
-        </div>
-        </header>
+    return (
+        <SHeader>
+            <SContainer>
+                <SHeaderBlock>
+                    <SHeaderLogoWrapper isVisible={!isDarkTheme}>
+                        <a href="/" target="_self">
+                            <SHeaderLogo src="images/logo.png" alt="logo" />
+                        </a>
+                    </SHeaderLogoWrapper>
+                    <SHeaderLogoWrapper isVisible={isDarkTheme}>
+                        <a href="/" target="_self">
+                            <SHeaderLogo src="images/logo_dark.png" alt="logo" />
+                        </a>
+                    </SHeaderLogoWrapper>
+
+                    <SHeaderNav>
+                        <SHeaderBtnNew>
+                        <a href="#popNewCard">Создать новую задачу</a>
+                        </SHeaderBtnNew>
+                        <SHeaderUserLink href="#user-set-target" onClick={handleUserClick}>
+                        Ivan Ivanov
+                        </SHeaderUserLink>
+                        <PopUser isOpen={isUserOpen} />
+                        <PopExit />
+                    </SHeaderNav>
+                </SHeaderBlock>
+            </SContainer>
+        </SHeader>
     );
 }
 

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Column from '../Column/Column'
-import {cardList} from "../../data"
+import Column from '../Column/Column';
+import {cardList} from "../../data";
+import SContainer from "../Container.styled";
+import { SMain, SMainBlock, SMainContent, SLoadingMessage } from "./Main.styled";
 
 function Main() {
 
@@ -16,23 +18,13 @@ function Main() {
 
     if (isLoading) {
         return (
-            <main className="main">
-                <div className="container">
-                    <div
-                        style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        height: "60vh",
-                        fontSize: "20px",
-                        color: "#94A6BE",
-                        fontWeight: "500",
-                        }}
-                    >
+            <SMain>
+                <SContainer>
+                    <SLoadingMessage>
                         Данные загружаются...
-                    </div>
-                </div>
-            </main>
+                    </SLoadingMessage>
+                </SContainer>
+            </SMain>
         );
     }
 
@@ -45,21 +37,21 @@ function Main() {
     ];
 
     return (
-        <main className="main">
-            <div className="container">
-                <div className="main__block">
-                <div className="main__content">
-                    {statuses.map((status) => (
-                    <Column
-                        key={status}
-                        title={status}
-                        cards={cardList.filter((card) => card.status === status)}
-                    />
-                    ))}
-                </div>
-                </div>
-            </div>
-        </main>
+        <SMain>
+            <SContainer>
+                <SMainBlock>
+                    <SMainContent>
+                        {statuses.map((status) => (
+                        <Column
+                            key={status}
+                            title={status}
+                            cards={cardList.filter((card) => card.status === status)}
+                        />
+                        ))}
+                    </SMainContent>
+                </SMainBlock>
+            </SContainer>
+        </SMain>
     );
 }
 
