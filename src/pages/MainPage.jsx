@@ -7,7 +7,7 @@ function MainPage() {
         <>
             <Header />
             <Main />
-            {/* <Outlet /> */}
+            <Outlet />
         </>
         );
     }

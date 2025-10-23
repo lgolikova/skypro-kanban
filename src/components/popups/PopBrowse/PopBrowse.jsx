@@ -1,28 +1,33 @@
 import React from "react";
 import Calendar from "../../Calendar/Calendar";
+import { cardList } from '../../../data';
+import { useNavigate } from "react-router-dom";
 
-function PopBrowse() {
+function PopBrowse({ cardId }) {
+    const card = cardList.find((c) => c.id === Number(cardId));
+    const navigate = useNavigate();
+
     return (
         <div className="pop-browse" id="popBrowse">
             <div className="pop-browse__container">
             <div className="pop-browse__block">
                 <div className="pop-browse__content">
                 <div className="pop-browse__top-block">
-                    <h3 className="pop-browse__ttl">Название задачи</h3>
+                    <h3 className="pop-browse__ttl">{card.title}</h3>
                     <div className="categories__theme theme-top _orange _active-category">
-                    <p className="_orange">Web Design</p>
+                        <p className="_orange">{card.topic}</p>
                     </div>
                 </div>
 
                 <div className="pop-browse__status status">
-                    <p className="status__p subttl">Статус</p>
-                    <div className="status__themes">
+                    <p className="status__p subttl">{card.status}</p>
+                    {/* <div className="status__themes">
                     <div className="status__theme _hide"><p>Без статуса</p></div>
                     <div className="status__theme _gray"><p className="_gray">Нужно сделать</p></div>
                     <div className="status__theme _hide"><p>В работе</p></div>
                     <div className="status__theme _hide"><p>Тестирование</p></div>
-                    <div className="status__theme _hide"><p>Готово</p></div>
-                    </div>
+                    <div className="status__theme _hide"><p>Готово</p></div> */}
+                    {/* </div> */}
                 </div>
 
                 <div className="pop-browse__wrap">
@@ -48,7 +53,7 @@ function PopBrowse() {
                     <button className="btn-browse__edit _btn-bor _hover03"><a href="#">Редактировать задачу</a></button>
                     <button className="btn-browse__delete _btn-bor _hover03"><a href="#">Удалить задачу</a></button>
                     </div>
-                    <button className="btn-browse__close _btn-bg _hover01"><a href="#">Закрыть</a></button>
+                    <button className="btn-browse__close _btn-bg _hover01" onClick={() => navigate("/")}>Закрыть</button>
                 </div>
                 </div>
             </div>

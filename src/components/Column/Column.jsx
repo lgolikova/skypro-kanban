@@ -1,7 +1,7 @@
 import Card from '../Card/Card';
 import { SMainColumn, SColumnTitle, SCards } from './Column.styled'
 
-function Column({ title, cards }) {
+function Column({ id, title, cards }) {
     return (
         <SMainColumn>
             <SColumnTitle>
@@ -10,6 +10,7 @@ function Column({ title, cards }) {
             <SCards>
             {cards.length > 0 ? (cards.map((card) => (
                 <Card
+                    id={card.id}
                     key={card.id}
                     topic={card.topic}
                     title={card.title}
