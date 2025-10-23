@@ -2,10 +2,13 @@ import React from "react";
 import Calendar from "../../Calendar/Calendar";
 import { cardList } from '../../../data';
 import { useNavigate } from "react-router-dom";
+import { theme } from '../../theme';
 
 function PopBrowse({ cardId }) {
     const card = cardList.find((c) => c.id === Number(cardId));
     const navigate = useNavigate();
+
+    const cardTheme = theme.topics[card.topic.toLowerCase()] || theme.topics.default;
 
     return (
         <div className="pop-browse" id="popBrowse">
@@ -14,20 +17,22 @@ function PopBrowse({ cardId }) {
                 <div className="pop-browse__content">
                 <div className="pop-browse__top-block">
                     <h3 className="pop-browse__ttl">{card.title}</h3>
-                    <div className="categories__theme theme-top _orange _active-category">
+                    <div className="categories__theme theme-top _orange _active-category"
+                    style={{
+                        backgroundColor: cardTheme.background,
+                        color: cardTheme.color
+                }}>
                         <p className="_orange">{card.topic}</p>
                     </div>
                 </div>
 
                 <div className="pop-browse__status status">
-                    <p className="status__p subttl">{card.status}</p>
-                    {/* <div className="status__themes">
-                    <div className="status__theme _hide"><p>Без статуса</p></div>
-                    <div className="status__theme _gray"><p className="_gray">Нужно сделать</p></div>
-                    <div className="status__theme _hide"><p>В работе</p></div>
-                    <div className="status__theme _hide"><p>Тестирование</p></div>
-                    <div className="status__theme _hide"><p>Готово</p></div> */}
-                    {/* </div> */}
+                    <p className="status__p subttl">Статус</p>
+                    <div className="status__themes">
+                        <div className="status__theme">
+                            <p>{card.status}</p>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="pop-browse__wrap">
