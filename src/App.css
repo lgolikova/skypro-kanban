@@ -16,10 +16,10 @@
     color: #ffffff;
 } */
 
-.pop-new-card:target,
+/* .pop-new-card:target,
 .pop-browse:target {
     display: block;
-}
+} */
 
 ._active-category {
     opacity: 1 !important;
@@ -32,7 +32,7 @@
 }
 
 .pop-new-card {
-    display: none;
+    /* display: none; */
     width: 100%;
     min-width: 375px;
     height: 100%;

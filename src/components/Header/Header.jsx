@@ -3,7 +3,7 @@ import PopUser from "../popups/PopUser/PopUser";
 import PopExit from "../popups/PopExit/PopExit";
 import SContainer from "../Container.styled";
 import { SHeader, SHeaderBlock, SHeaderNav, SHeaderBtnNew, SHeaderUserLink, SHeaderLogo, SHeaderLogoWrapper } from './Header.styled';
-
+import { Link } from "react-router-dom";
 
 function Header({ isDarkTheme }) {
 
@@ -31,7 +31,8 @@ function Header({ isDarkTheme }) {
 
                     <SHeaderNav>
                         <SHeaderBtnNew>
-                        <a href="#popNewCard">Создать новую задачу</a>
+                        {/* <a href="#popNewCard">Создать новую задачу</a> */}
+                        <Link to={`/new`} style={{ textDecoration: "none" }}>Создать новую задачу</Link>
                         </SHeaderBtnNew>
                         <SHeaderUserLink href="#user-set-target" onClick={handleUserClick}>
                         Ivan Ivanov

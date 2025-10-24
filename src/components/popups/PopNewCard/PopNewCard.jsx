@@ -1,14 +1,19 @@
 import React from "react";
 import Calendar from "../../Calendar/Calendar";
+import { theme } from '../../theme';
+import { useNavigate } from "react-router-dom";
 
 function PopNewCard() {
+    // const cardTheme = theme.topics[card.topic.toLowerCase()] || theme.topics.default;
+    const navigate = useNavigate();
+
     return (
         <div className="pop-new-card" id="popNewCard">
             <div className="pop-new-card__container">
             <div className="pop-new-card__block">
                 <div className="pop-new-card__content">
                 <h3 className="pop-new-card__ttl">Создание задачи</h3>
-                <a href="#" className="pop-new-card__close">&#10006;</a>
+                <a href="#" className="pop-new-card__close" onClick={() => navigate("/")}>&#10006;</a>
 
                 <div className="pop-new-card__wrap">
                     <form className="pop-new-card__form form-new" id="formNewCard" action="#">

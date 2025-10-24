@@ -3,10 +3,18 @@ import Calendar from "../../Calendar/Calendar";
 import { cardList } from '../../../data';
 import { useNavigate } from "react-router-dom";
 import { theme } from '../../theme';
+// import { Link } from "react-router-dom";
+// import NotFoundPage from "../../../pages/NotFoundPage";
 
 function PopBrowse({ cardId }) {
     const card = cardList.find((c) => c.id === Number(cardId));
     const navigate = useNavigate();
+
+    // if (!card) {
+    //     return (
+    //
+    //     );
+    // }
 
     const cardTheme = theme.topics[card.topic.toLowerCase()] || theme.topics.default;
 
