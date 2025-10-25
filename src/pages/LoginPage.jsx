@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
     Wrapper,
     Container,
@@ -11,7 +12,15 @@ import {
     FormGroup,
 } from "../pages/Login.styled";
 
-function Login() {
+function Login({ setIsAuth }) {
+    const navigate = useNavigate();
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        setIsAuth(true);
+        navigate("/");
+    };
+
     return (
         <Wrapper>
             <Container>
@@ -20,7 +29,7 @@ function Login() {
                         <ModalTitle>
                         <h2>Вход</h2>
                         </ModalTitle>
-                        <Form>
+                        <Form onSubmit={handleLogin}>
                             <Input type="text" name="login" placeholder="Эл. почта" />
                             <Input type="password" name="password" placeholder="Пароль" />
                             <Button type="submit">Войти</Button>

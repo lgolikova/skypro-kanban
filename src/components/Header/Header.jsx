@@ -5,13 +5,11 @@ import SContainer from "../Container.styled";
 import { SHeader, SHeaderBlock, SHeaderNav, SHeaderBtnNew, SHeaderUserLink, SHeaderLogo, SHeaderLogoWrapper } from './Header.styled';
 import { Link } from "react-router-dom";
 
-function Header({ isDarkTheme }) {
+function Header({ isDarkTheme, onLogout } ) {
 
     const [isUserOpen, setIsUserOpen] = useState(false);
 
-    const handleUserClick = () => {
-        setIsUserOpen(!isUserOpen);
-    };
+    const handleUserClick = () => setIsUserOpen((prev) => !prev);
 
 
     return (
@@ -19,25 +17,24 @@ function Header({ isDarkTheme }) {
             <SContainer>
                 <SHeaderBlock>
                     <SHeaderLogoWrapper isVisible={!isDarkTheme}>
-                        <a href="/" target="_self">
+                        <Link to="/">
                             <SHeaderLogo src="images/logo.png" alt="logo" />
-                        </a>
+                        </Link>
                     </SHeaderLogoWrapper>
                     <SHeaderLogoWrapper isVisible={isDarkTheme}>
-                        <a href="/" target="_self">
+                        <Link to="/">
                             <SHeaderLogo src="images/logo_dark.png" alt="logo" />
-                        </a>
+                        </Link>
                     </SHeaderLogoWrapper>
 
                     <SHeaderNav>
                         <SHeaderBtnNew>
-                        {/* <a href="#popNewCard">Создать новую задачу</a> */}
-                        <Link to={`/new`} style={{ textDecoration: "none" }}>Создать новую задачу</Link>
+                            <Link to={`/new`} style={{ textDecoration: "none" }}>Создать новую задачу</Link>
                         </SHeaderBtnNew>
-                        <SHeaderUserLink href="#user-set-target" onClick={handleUserClick}>
-                        Ivan Ivanov
+                        <SHeaderUserLink onClick={handleUserClick}>
+                            Ivan Ivanov
                         </SHeaderUserLink>
-                        <PopUser isOpen={isUserOpen} />
+                        <PopUser isOpen={isUserOpen} onLogout={onLogout} onClose={() => setIsUserOpen(false)}/>
                         <PopExit />
                     </SHeaderNav>
                 </SHeaderBlock>

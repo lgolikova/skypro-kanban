@@ -76,7 +76,7 @@ export const SHeaderLogo = styled.img`
 `;
 
 export const SHeaderLogoWrapper = styled.div`
-    display: ${({ isVisible }) => (isVisible ? "block" : "none")};
+    display: ${(props) => (props.isVisible ? "block" : "none")};
 
     a {
         display: inline-block;
