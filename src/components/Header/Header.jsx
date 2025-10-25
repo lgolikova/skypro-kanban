@@ -8,8 +8,18 @@ import { Link } from "react-router-dom";
 function Header({ isDarkTheme, onLogout } ) {
 
     const [isUserOpen, setIsUserOpen] = useState(false);
+    const [isExitOpen, setIsExitOpen] = useState(false);
 
-    const handleUserClick = () => setIsUserOpen((prev) => !prev);
+    const handleUserClick = () => setIsUserOpen(prev => !prev);
+    const handleLogoutConfirm = () => {
+        setIsExitOpen(true);
+        setIsUserOpen(false);
+    };
+    const handleExit = () => {
+        onLogout();
+        setIsExitOpen(false);
+    };
+
 
 
     return (
@@ -31,13 +41,26 @@ function Header({ isDarkTheme, onLogout } ) {
                         <SHeaderBtnNew>
                             <Link to={`/new`} style={{ textDecoration: "none" }}>Создать новую задачу</Link>
                         </SHeaderBtnNew>
-                        <SHeaderUserLink onClick={handleUserClick}>
+                        <SHeaderUserLink  onClick={handleUserClick}>
                             Ivan Ivanov
                         </SHeaderUserLink>
-                        <PopUser isOpen={isUserOpen} onLogout={onLogout} onClose={() => setIsUserOpen(false)}/>
-                        <PopExit />
+                        <PopUser
+                            isOpen={isUserOpen}
+                            onClose={() => setIsUserOpen(false)}
+                            onRequestExit={handleLogoutConfirm}
+                        />
+                        {/* <PopExit
+                            isOpen={isExitOpen}
+                            onCancel={() => setIsExitOpen(false)}
+                            onConfirm={handleExit}
+                            /> */}
                     </SHeaderNav>
                 </SHeaderBlock>
+                <PopExit
+                        isOpen={isExitOpen}
+                        onCancel={() => setIsExitOpen(false)}
+                        onConfirm={handleExit}
+                        />
             </SContainer>
         </SHeader>
     );
