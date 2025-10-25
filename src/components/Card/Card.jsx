@@ -1,7 +1,8 @@
 import React from "react";
 import { SCardsItem, SCard, SCardGroup, SCardContent, SCardTitle, SCardDate, SCardBtn, SCardTheme } from './Card.styled'
+import { Link } from "react-router-dom";
 
-function Card({ topic, title, date }) {
+function Card({ id, topic, title, date }) {
     return (
         <SCardsItem>
             <SCard>
@@ -9,11 +10,11 @@ function Card({ topic, title, date }) {
                     <SCardTheme topic={topic}>
                         <p>{topic}</p>
                     </SCardTheme>
-                    <a href="#popBrowse" target="_self">
-                    <SCardBtn>
-                        <div></div><div></div><div></div>
-                    </SCardBtn>
-                    </a>
+                    <Link to={`/card/${id}`} style={{ textDecoration: "none" }}>
+                        <SCardBtn>
+                            <div></div><div></div><div></div>
+                        </SCardBtn>
+                    </Link>
                 </SCardGroup>
                 <SCardContent>
                     <a href="#" target="_blank">

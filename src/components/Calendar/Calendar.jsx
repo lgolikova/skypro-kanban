@@ -89,7 +89,7 @@ import {
 
             <SCalendarPeriod>
             <p>
-                Выберите срок исполнения: <span>08.09.2023</span>
+                Срок исполнения: <span>08.09.2023</span>
             </p>
             </SCalendarPeriod>
         </SCalendarBlock>

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const SPopUserSet = styled.div`
-    display: none;
+    /* display: none; */
     position: absolute;
     top: 61px;
     right: 0;
@@ -13,7 +13,7 @@ export const SPopUserSet = styled.div`
     box-shadow: 0px 10px 39px 0px rgba(26, 56, 101, 0.21);
     padding: 34px;
     text-align: center;
-    z-index: 2;
+    z-index: 10;
 
     :target {
         display: block;

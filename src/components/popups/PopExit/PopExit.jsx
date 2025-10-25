@@ -1,7 +1,9 @@
 import React from "react";
 import {SPopExit, SPopExitContainer, SPopExitBlock, SPopExitTtl, SPopExitFormGroup, SPopExitYes, SPopExitNo} from './PopExit.styled';
 
-function PopExit() {
+function PopExit({ isOpen, onCancel, onConfirm }) {
+    if (!isOpen) return null;
+
     return (
         <SPopExit id="popExit">
             <SPopExitContainer>
@@ -12,10 +14,10 @@ function PopExit() {
                     <form id="formExit" action="#">
                         <SPopExitFormGroup>
                             <SPopExitYes id="exitYes">
-                                <a href="modal/signin.html">Да, выйти</a>
+                                <a onClick={onConfirm}>Да, выйти</a>
                             </SPopExitYes>
                             <SPopExitNo id="exitNo">
-                                <a href="main.html">Нет, остаться</a>
+                                <a onClick={onCancel}>Нет, остаться</a>
                             </SPopExitNo>
                         </SPopExitFormGroup>
                     </form>
