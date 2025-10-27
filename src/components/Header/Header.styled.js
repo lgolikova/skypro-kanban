@@ -47,27 +47,31 @@ export const SHeaderBtnNew = styled.button`
     }
 `;
 
-export const SHeaderUserLink = styled.a`
-    height: 20px;
-    display: flex;
-    flex-wrap: nowrap;
+export const SHeaderUserLink = styled.button`
+    display: inline-flex;
     align-items: center;
     justify-content: center;
+    min-width: 80px;
+    height: 30px;
+    /* padding: 0 8px; */
     font-size: 14px;
-    line-height: 20px;
     color: #565eef;
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    white-space: nowrap;
 
     &::after {
         content: "";
-        display: block;
+        display: inline-block;
         width: 6px;
         height: 6px;
-        border-radius: 1px;
         border-left: 1.9px solid #565eef;
         border-bottom: 1.9px solid #565eef;
         transform: rotate(-45deg);
-        margin: -6px 0 0 5px;
-        padding: 0;
+        margin-left: 5px;
+        pointer-events: none;
     }
 `;
 
@@ -76,7 +80,7 @@ export const SHeaderLogo = styled.img`
 `;
 
 export const SHeaderLogoWrapper = styled.div`
-    display: ${({ isVisible }) => (isVisible ? "block" : "none")};
+    display: ${(props) => (props.isVisible ? "block" : "none")};
 
     a {
         display: inline-block;
