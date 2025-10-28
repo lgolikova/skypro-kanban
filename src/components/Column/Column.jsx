@@ -10,8 +10,8 @@ function Column({ id, title, cards }) {
             <SCards>
             {cards.length > 0 ? (cards.map((card) => (
                 <Card
-                    id={card.id}
-                    key={card.id}
+                    id={card._id}
+                    key={card._id}
                     topic={card.topic}
                     title={card.title}
                     date={card.date}
