@@ -30,3 +30,18 @@ export async function addTask(token, taskData) {
         throw new Error(error.message);
     }
 }
+
+export async function deleteTask(token, id) {
+    try {
+        const response = await axios.delete(`${API_URL}/${id}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        return response.data.tasks;
+    } catch (error) {
+        throw new Error(
+            error.response?.data?.error || "Ошибка при удалении задачи"
+        );
+    }
+}

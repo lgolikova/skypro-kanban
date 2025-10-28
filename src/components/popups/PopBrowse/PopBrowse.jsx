@@ -3,6 +3,8 @@ import Calendar from "../../Calendar/Calendar";
 import { useNavigate } from "react-router-dom";
 import { theme } from '../../theme';
 import { useState, useEffect } from "react";
+import { deleteTask } from "../../../../src/services/api";
+
 
 function PopBrowse({ cardId }) {
     const [task, setTask] = useState(null);
@@ -14,18 +16,21 @@ function PopBrowse({ cardId }) {
 
     const navigate = useNavigate();
 
-    // if (!card) {
-    //     return (
-    //         <div className="pop-browse">
-    //             <div className="pop-browse__container">
-    //                 <div className="pop-browse__block">
-    //                     <p>Карточка не найдена</p>
-    //                     <button onClick={() => navigate("/")}>Закрыть</button>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     );
-    // }
+    const handleDelete = async () => {
+        const token = JSON.parse(localStorage.getItem("userInfo"))?.token;
+        if (!token) return alert("Вы не авторизованы");
+
+        if (window.confirm("Вы уверены, что хотите удалить задачу?")) {
+            try {
+                await deleteTask(token, cardId);
+                alert("Задача удалена");
+                navigate("/");
+            } catch (err) {
+                alert("Ошибка при удалении задачи: " + err.message);
+            }
+        }
+    };
+
     useEffect(() => {
         if (!token) return;
 
@@ -109,7 +114,7 @@ function PopBrowse({ cardId }) {
                         <div className="pop-browse__btn-browse">
                             <div className="btn-group">
                             <button className="btn-browse__edit _btn-bor _hover03"><a href="#">Редактировать задачу</a></button>
-                            <button className="btn-browse__delete _btn-bor _hover03"><a href="#">Удалить задачу</a></button>
+                            <button className="btn-browse__delete _btn-bor _hover03"  onClick={handleDelete}><a href="#">Удалить задачу</a></button>
                             </div>
                             <button className="btn-browse__close _btn-bg _hover01" onClick={() => navigate("/")}>Закрыть</button>
                         </div>
