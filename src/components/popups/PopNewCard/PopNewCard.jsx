@@ -54,28 +54,22 @@ function PopNewCard({ onSubmit }) {
                 <div className="pop-new-card__categories categories">
                     <p className="categories__p subttl">Категория</p>
                     <div className="categories__themes">
-                        {/* <div className="categories__theme _orange _active-category">
-                            <p className="_orange">Web Design</p>
-                        </div>
-                        <div className="categories__theme _green">
-                            <p className="_green">Research</p>
-                        </div>
-                        <div className="categories__theme _purple">
-                            <p className="_purple">Copywriting</p>
-                        </div> */}
-                        {["Web Design", "Research", "Copywriting"].map((cat) => (
-                                    <div
-                                        key={cat}
-                                        className={`categories__theme ${
-                                            category === cat
-                                                ? "_active-category"
-                                                : ""
-                                        }`}
-                                        onClick={() => setCategory(cat)}
-                                    >
-                                        <p>{cat}</p>
-                                    </div>
-                        ))}
+                        {["Web Design", "Research", "Copywriting"].map((cat) => {
+                        let colorClass = "";
+                        if (cat === "Web Design") colorClass = "_orange";
+                        if (cat === "Research") colorClass = "_green";
+                        if (cat === "Copywriting") colorClass = "_purple";
+
+                        return (
+                            <div
+                            key={cat}
+                            className={`categories__theme ${colorClass} ${category === cat ? "_active-category" : ""}`}
+                            onClick={() => setCategory(cat)}
+                            >
+                            <p className={colorClass}>{cat}</p>
+                            </div>
+                        );
+                        })}
                     </div>
                 </div>
 
