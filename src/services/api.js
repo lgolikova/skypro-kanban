@@ -1,5 +1,4 @@
 import axios from "axios";
-// const token = "ksdfsksdfjfsdjk";
 
 const API_URL = "https://wedev-api.sky.pro/api/kanban";
 
@@ -22,7 +21,7 @@ export async function addTask(token, taskData) {
         const response = await axios.post(API_URL, taskData, {
             headers: {
                 Authorization: `Bearer ${token}`,
-                "Content-Type": "", //?????????
+                "Content-Type": "",
             },
         });
         return response.data.tasks;
@@ -40,8 +39,27 @@ export async function deleteTask(token, id) {
         });
         return response.data.tasks;
     } catch (error) {
-        throw new Error(
-            error.response?.data?.error || "Ошибка при удалении задачи"
-        );
+        throw new Error(error.message);
     }
+}
+
+export async function updateTask(token, id, taskData) {
+    try {
+        const response = await axios.put(`${API_URL}/${id}`, taskData, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": " ",
+            },
+        });
+        return response.data.tasks;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+}
+
+export async function getTaskById(token, id) {
+    const response = await axios.get(`${API_URL}/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return response.data;
 }
