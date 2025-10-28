@@ -12,26 +12,35 @@ import {
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { signUp } from "../../src/services/auth"
 
-    function Register({ setIsAuth }) {
+function Register({ setIsAuth }) {
         const [formData, setFormData] = useState({
             name: "",
-            email: "",
+            login: "",
             password: "",
         });
 
+        const [error, setError] = useState("");
         const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setError("");
 
-        if (setIsAuth) setIsAuth(true);
-
-        navigate("/");
+        try {
+            const user = await signUp(formData);
+            localStorage.setItem("userInfo", JSON.stringify(user));
+            if (setIsAuth) setIsAuth(true);
+            navigate("/");
+        } catch (err) {
+            setError(err.message);
+        }
     };
 
         return (
@@ -46,8 +55,8 @@ import { useState } from "react";
                             <Input type="text" name="name" placeholder="Имя" value={formData.name}
                             onChange={handleChange}
                             required/>
-                            <Input type="text" name="email" placeholder="Эл.почта"
-                                value={formData.email}
+                            <Input type="text" name="login" placeholder="Эл.почта"
+                                value={formData.login}
                                 onChange={handleChange}
                                 required/>
                             <Input
@@ -59,6 +68,7 @@ import { useState } from "react";
                             required
                             />
                             <Button type="submit">Зарегистрироваться</Button>
+                            {error && <p style={{ color: "red" }}>{error}</p>}
                             <FormGroup>
                                 <p>Уже есть аккаунт?</p>
                                 <Link to="/login">Войдите здесь</Link>
