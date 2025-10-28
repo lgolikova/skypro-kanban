@@ -49,11 +49,6 @@ function Header({ isDarkTheme, onLogout } ) {
                             onClose={() => setIsUserOpen(false)}
                             onRequestExit={handleLogoutConfirm}
                         />
-                        {/* <PopExit
-                            isOpen={isExitOpen}
-                            onCancel={() => setIsExitOpen(false)}
-                            onConfirm={handleExit}
-                            /> */}
                     </SHeaderNav>
                 </SHeaderBlock>
                 <PopExit
