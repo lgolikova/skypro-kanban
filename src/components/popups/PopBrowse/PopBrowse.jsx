@@ -168,14 +168,37 @@ function PopBrowse({ cardId }) {
 
                         <div className="pop-browse__btn-browse">
                             <div className="btn-group">
-                                {isEditing ? (
-                                    <button className="_btn-save" onClick={handleSave}>Сохранить</button>
-                                ) : (
-                                    <button className="_btn-edit" onClick={() => setIsEditing(true)}>Редактировать задачу</button>
-                                )}
-                                <button className="_btn-delete" onClick={handleDelete}>Удалить задачу</button>
+                            {isEditing ? (
+                                <>
+                                    <button
+                                        className="_btn-save _btn-bg _hover01"
+                                        onClick={handleSave}
+                                    >
+                                        Сохранить
+                                    </button>
+                                    <button
+                                        className="_btn-cancel _btn-bor _hover03"
+                                        onClick={() => {
+                                            setTitle(card.title);
+                                            setDescription(card.description);
+                                            setTopic(card.topic);
+                                            setIsEditing(false);
+                                        }}
+                                    >
+                                        Отменить
+                                    </button>
+                                </>
+                            ) : (
+                                <button
+                                    className="_btn-edit btn-browse__edit _btn-bor _hover03"
+                                    onClick={() => setIsEditing(true)}
+                                >
+                                    Редактировать задачу
+                                </button>
+                            )}
+                                <button className="_btn-delete btn-browse__delete _btn-bor _hover03" onClick={handleDelete}>Удалить задачу</button>
                             </div>
-                            <button className="_btn-close" onClick={() => navigate("/")}>Закрыть</button>
+                            <button className="_btn-close btn-browse__close _btn-bg _hover01" onClick={() => navigate("/")}>Закрыть</button>
                         </div>
                     </div>
                 </div>
