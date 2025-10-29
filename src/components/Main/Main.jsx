@@ -13,48 +13,37 @@ function Main() {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
-    const loginData = { login: "admin", password: "admin" };
-
     useEffect(() => {
         async function loadTasks() {
-            try {
-
-                const loginResponse = await fetch("https://wedev-api.sky.pro/api/user/login", {
-                    method: "POST",
-                    headers: { "Content-Type": "" },
-                    body: JSON.stringify(loginData)
-                });
-
-                if (!loginResponse.ok) {
-                    throw new Error("Ошибка авторизации: " + loginResponse.status);
-                }
-
-                const loginResult = await loginResponse.json();
-                const token = loginResult.user.token;
-                localStorage.setItem("userInfo", JSON.stringify(loginResult.user));
-
-
-                const tasksResponse = await fetch("https://wedev-api.sky.pro/api/kanban", {
-                    headers: { "Authorization": "Bearer " + token }
-                });
-
-                if (!tasksResponse.ok) {
-                    throw new Error("Ошибка загрузки задач: " + tasksResponse.status);
-                }
-
-                const tasks = await tasksResponse.json();
-                setCards(tasks.tasks);
-                console.log("Ответ задач:", tasks);
-
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
+          try {
+            const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            const token = userInfo?.token;
+      
+            if (!token) {
+              throw new Error("Нет токена. Пожалуйста, авторизуйтесь.");
             }
+      
+            const tasksResponse = await fetch("https://wedev-api.sky.pro/api/kanban", {
+              headers: { "Authorization": `Bearer ${token}` }
+            });
+      
+            if (!tasksResponse.ok) {
+              throw new Error("Ошибка загрузки задач: " + tasksResponse.status);
+            }
+      
+            const tasks = await tasksResponse.json();
+            setCards(tasks.tasks);
+            console.log("Ответ задач:", tasks);
+      
+          } catch (err) {
+            setError(err.message);
+          } finally {
+            setIsLoading(false);
+          }
         }
-
+      
         loadTasks();
-    }, []);
+      }, []);
 
     if (isLoading) {
         return (
