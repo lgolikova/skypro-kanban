@@ -18,7 +18,7 @@ function Column({ id, title, cards }) {
                 />
             ))
             ) : (
-                <p>Нет задач</p>
+                ''
             )}
             </SCards>
         </SMainColumn>

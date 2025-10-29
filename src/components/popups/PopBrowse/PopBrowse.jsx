@@ -152,13 +152,13 @@ function PopBrowse({ cardId }) {
                         <div className="pop-browse__wrap">
                             {isEditing ? (
                                 <textarea
-                                    className="pop-browse__textarea"
+                                    className="pop-browse__textarea form-browse__area form-browse__area_white"
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                 />
                             ) : (
                                 <textarea
-                                    className="pop-browse__textarea"
+                                    className="pop-browse__textarea form-browse__area"
                                     readOnly
                                     value={card.description || ""}
                                 />
