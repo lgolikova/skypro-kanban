@@ -308,6 +308,10 @@
     letter-spacing: -0.14px;
 }
 
+.form-browse__area_white {
+    background: #fff;
+}
+
 .status {
     margin-bottom: 11px;
 }
