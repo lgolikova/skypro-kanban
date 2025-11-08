@@ -19,7 +19,7 @@ function PopNewCard({ onSubmit }) {
             description,
             topic: category,
             status: "Без статуса",
-            date: new Date().toISOString(), 
+            date: new Date().toISOString(),
         };
 
         if (onSubmit) onSubmit(newTask);
@@ -84,4 +84,3 @@ function PopNewCard({ onSubmit }) {
 }
 
 export default PopNewCard;
-
