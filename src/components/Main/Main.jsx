@@ -1,51 +1,53 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Column from '../Column/Column';
 import {cardList} from "../../data";
 import SContainer from "../Container.styled";
 import { SMain, SMainBlock, SMainContent, SLoadingMessage } from "./Main.styled";
 import { getTasks } from "../../../src/services/api";
 import { useNavigate } from "react-router-dom";
+import { TaskContext } from '../../../src/context/TaskContext';
 
 function Main() {
+    const { tasks, loading, error } = useContext(TaskContext);
 
-    const [cards, setCards] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
-    const navigate = useNavigate();
+    // const [cards, setCards] = useState([]);
+    // const [isLoading, setIsLoading] = useState(true);
+    // const [error, setError] = useState("");
+    // const navigate = useNavigate();
 
-    useEffect(() => {
-        async function loadTasks() {
-            try {
-                const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-                const token = userInfo?.token;
+    // useEffect(() => {
+    //     async function loadTasks() {
+    //         try {
+    //             const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    //             const token = userInfo?.token;
 
-                if (!token) {
-                throw new Error("Нет токена. Пожалуйста, авторизуйтесь.");
-                }
+    //             if (!token) {
+    //             throw new Error("Нет токена. Пожалуйста, авторизуйтесь.");
+    //             }
 
-                const tasksResponse = await fetch("https://wedev-api.sky.pro/api/kanban", {
-                headers: { "Authorization": `Bearer ${token}` }
-                });
+    //             const tasksResponse = await fetch("https://wedev-api.sky.pro/api/kanban", {
+    //             headers: { "Authorization": `Bearer ${token}` }
+    //             });
 
-                if (!tasksResponse.ok) {
-                throw new Error("Ошибка загрузки задач: " + tasksResponse.status);
-                }
+    //             if (!tasksResponse.ok) {
+    //             throw new Error("Ошибка загрузки задач: " + tasksResponse.status);
+    //             }
 
-                const tasks = await tasksResponse.json();
-                setCards(tasks.tasks);
-                console.log("Ответ задач:", tasks);
+    //             const tasks = await tasksResponse.json();
+    //             setCards(tasks.tasks);
+    //             console.log("Ответ задач:", tasks);
 
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setIsLoading(false);
-            }
-            }
+    //         } catch (err) {
+    //             setError(err.message);
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //         }
 
-            loadTasks();
-        }, []);
+    //         loadTasks();
+    //     }, []);
 
-    if (isLoading) {
+    if (loading) {
         return (
             <SMain>
                 <SContainer>
@@ -87,7 +89,7 @@ function Main() {
                         <Column
                             key={status}
                             title={status}
-                            cards={cards.filter((card) => card.status === status)}
+                            cards={tasks.filter((card) => card.status === status)}
                         />
                         ))}
                     </SMainContent>
