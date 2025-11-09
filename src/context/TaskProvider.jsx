@@ -1,7 +1,12 @@
 import { useContext, useState, useEffect, useCallback } from "react";
 import { TaskContext } from "./TaskContext";
 import { AuthContext } from "./AuthContext";
-import { getTasks, addTask, updateTask, deleteTask } from "../services/api";
+import {
+    getTasks,
+    addTask as apiAddTask,
+    updateTask as apiUpdateTask,
+    deleteTask as apiDeleteTask,
+} from "../services/api";
 
 const TaskProvider = ({ children }) => {
     const { user } = useContext(AuthContext);
@@ -10,66 +15,73 @@ const TaskProvider = ({ children }) => {
     const [error, setError] = useState("");
 
     const refreshTasks = useCallback(async () => {
+        if (!user?.token) return;
+        setLoading(true);
         try {
-        const tasks = await getTasks(user.token);
-        console.log("Ответ от API:", tasks);
-        setTasks(tasks || []);
+            const fetched = await getTasks(user.token);
+            setTasks(fetched || []);
         } catch (err) {
-        console.error("Ошибка загрузки задач:", err);
-        setError("Ошибка загрузки задач");
+            console.error("Ошибка загрузки задач:", err);
+            setError("Ошибка загрузки задач");
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
     }, [user]);
 
     useEffect(() => {
-        if (user?.token) {
-        refreshTasks();
-        }
+        if (user?.token) refreshTasks();
     }, [user, refreshTasks]);
 
-    const handleAddTask = async (taskData) => {
+    const addTask = async (taskData) => {
+        if (!user?.token) return;
         try {
-        await addTask(user.token, taskData);
-        refreshTasks();
+            const updatedTasks = await apiAddTask(user.token, taskData);
+            setTasks(updatedTasks);
         } catch (err) {
-        console.error("Ошибка добавления задачи:", err);
+            console.error("Ошибка добавления задачи:", err);
+            throw err;
         }
     };
 
-    const handleUpdateTask = async (id, updatedData) => {
+    const updateTask = async (id, taskData) => {
+        if (!user?.token) return;
         try {
-        await updateTask(user.token, id, updatedData);
-        refreshTasks();
+            const response = await apiUpdateTask(user.token, id, taskData);
+            const updatedList = response?.tasks || response || [];
+            setTasks(updatedList);
         } catch (err) {
-        console.error("Ошибка обновления задачи:", err);
+            console.error("Ошибка обновления задачи:", err);
+            throw err;
         }
     };
 
-    const handleDeleteTask = async (id) => {
+    const deleteTask = async (id) => {
+        if (!user?.token) return;
         try {
-        await deleteTask(user.token, id);
-        refreshTasks();
+            const response = await apiDeleteTask(user.token, id);
+            const updatedList = response?.tasks || response || [];
+            setTasks(updatedList);
         } catch (err) {
-        console.error("Ошибка удаления задачи:", err);
+            console.error("Ошибка удаления задачи:", err);
         }
     };
 
     return (
         <TaskContext.Provider
-        value={{
-            tasks,
-            loading,
-            error,
-            refreshTasks,
-            addTask: handleAddTask,
-            updateTask: handleUpdateTask,
-            deleteTask: handleDeleteTask,
-        }}
+            value={{
+                tasks,
+                loading,
+                error,
+                refreshTasks,
+                addTask,
+                updateTask,
+                deleteTask,
+            }}
         >
-        {children}
+            {children}
         </TaskContext.Provider>
     );
 };
 
 export default TaskProvider;
+

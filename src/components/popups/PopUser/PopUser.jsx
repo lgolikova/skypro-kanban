@@ -3,20 +3,7 @@ import { SPopUserSet, SPopUserSetName, SPopUserSetMail, SPopUserSetTheme } from 
 import { AuthContext } from "../../../context/AuthContext";
 
 function PopUser({ isOpen, onClose, onRequestExit }) {
-    // const [userName, setUserName] = useState("");
-    // const [userEmail, setUserEmail] = useState("");
     const { user } = useContext(AuthContext);
-
-    // useEffect(() => {
-    //     if (isOpen) {
-    //         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    //         if (userInfo) {
-    //             setUserName(userInfo.user?.name || userInfo.name || "Пользователь");
-    //             setUserEmail(userInfo.user?.login || userInfo.login || "—");
-    //         }
-    //     }
-    // }, [isOpen]);
-
 
     if (!isOpen) return null;
 

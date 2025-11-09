@@ -1,16 +1,8 @@
 import React, { useContext } from "react";
 import { SCardsItem, SCard, SCardGroup, SCardContent, SCardTitle, SCardDate, SCardBtn, SCardTheme } from './Card.styled'
 import { Link } from "react-router-dom";
-import { TaskContext } from '../../../src/context/TaskContext';
 
-function Card({ id }) {
-    const { tasks } = useContext(TaskContext);
-
-    const card = tasks.find((t) => t._id === id);
-
-    if (!card) return null;
-
-    const { topic, title, date } = card;
+function Card({ id, topic, title, date }) {
 
     const formatDate = (isoString) => {
         if (!isoString) return "";
