@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { signIn } from "../../src/services/auth"; 
+import { useState, useContext } from "react";
+import { signIn } from "../../src/services/auth";
+import { AuthContext } from '../context/AuthContext';
 import {
     Wrapper,
     Container,
@@ -23,6 +24,8 @@ function Login({ setIsAuth }) {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    const { login } = useContext(AuthContext);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -34,7 +37,7 @@ function Login({ setIsAuth }) {
 
         try {
             const user = await signIn(formData);
-            localStorage.setItem("userInfo", JSON.stringify(user));
+            login(user);
             if (setIsAuth) setIsAuth(true);
             navigate("/");
         } catch (err) {

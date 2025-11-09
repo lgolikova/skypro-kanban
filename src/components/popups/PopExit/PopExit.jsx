@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import {SPopExit, SPopExitContainer, SPopExitBlock, SPopExitTtl, SPopExitFormGroup, SPopExitYes, SPopExitNo} from './PopExit.styled';
+import { AuthContext } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-function PopExit({ isOpen, onCancel, onConfirm }) {
+function PopExit({ isOpen, onCancel }) {
+    const { logout } = useContext(AuthContext);
+    const navigate = useNavigate();
+
     if (!isOpen) return null;
+
+    const handleConfirm = () => {
+        logout();
+        navigate("/login");
+    };
 
     return (
         <SPopExit id="popExit">
@@ -14,7 +24,7 @@ function PopExit({ isOpen, onCancel, onConfirm }) {
                     <form id="formExit" action="#">
                         <SPopExitFormGroup>
                             <SPopExitYes id="exitYes">
-                                <a onClick={onConfirm}>Да, выйти</a>
+                                <a onClick={handleConfirm}>Да, выйти</a>
                             </SPopExitYes>
                             <SPopExitNo id="exitNo">
                                 <a onClick={onCancel}>Нет, остаться</a>
