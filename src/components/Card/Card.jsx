@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SCardsItem, SCard, SCardGroup, SCardContent, SCardTitle, SCardDate, SCardBtn, SCardTheme } from './Card.styled'
 import { Link } from "react-router-dom";
 
 function Card({ id, topic, title, date }) {
+
     const formatDate = (isoString) => {
         if (!isoString) return "";
         const d = new Date(isoString);

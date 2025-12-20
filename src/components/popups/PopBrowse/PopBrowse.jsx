@@ -2,84 +2,48 @@ import React from "react";
 import Calendar from "../../Calendar/Calendar";
 import { useNavigate } from "react-router-dom";
 import { theme } from '../../theme';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { deleteTask, updateTask, getTaskById } from "../../../../src/services/api";
+import { TaskContext } from "../../../context/TaskContext";
 
 
 function PopBrowse({ cardId }) {
+    const { tasks, updateTask, deleteTask, loading, error } = useContext(TaskContext);
     const [card, setCard] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState("");
     const [isEditing, setIsEditing] = useState(false);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [topic, setTopic] = useState("");
 
     const navigate = useNavigate();
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const token = userInfo?.token;
 
     const topics = ["Web Design", "Research", "Copywriting"];
 
     useEffect(() => {
-        const loadTask = async () => {
-            if (!token) {
-                setError("Вы не авторизованы");
-                setIsLoading(false);
-                return;
-            }
-
-            try {
-                const response = await getTaskById(token, cardId);
-                const taskData = response.task;
-                setCard(taskData);
-                setTitle(taskData.title);
-                setDescription(taskData.description);
-                setTopic(taskData.topic);
-            } catch (err) {
-                setError(err.message || "Ошибка загрузки задачи");
-            } finally {
-                setIsLoading(false);
-            }
-        };
-        loadTask();
-    }, [cardId, token]);
-
-    const handleDelete = async () => {
-        if (!token) return alert("Вы не авторизованы");
-
-        if (window.confirm("Вы уверены, что хотите удалить задачу?")) {
-            try {
-                await deleteTask(token, cardId);
-                alert("Задача удалена");
-                navigate("/");
-            } catch (err) {
-                alert("Ошибка при удалении задачи: " + err.message);
-            }
+        const task = tasks.find(t => t._id === cardId);
+        if (task) {
+            setCard(task);
+            setTitle(task.title);
+            setDescription(task.description);
+            setTopic(task.topic);
         }
-    };
+    }, [tasks, cardId]);
 
     const handleSave = async () => {
-        if (!token) return alert("Вы не авторизованы");
+        await updateTask(cardId, { title, description, topic });
+        setIsEditing(false);
+        alert("Задача обновлена!");
+    };
 
-        try {
-            const updatedTask = {
-                title,
-                description,
-                topic,
-                status: card.status,
-                date: card.date,
-            };
-            await updateTask(token, cardId, updatedTask);
-            setCard({ ...card, ...updatedTask });
-            setIsEditing(false);
-            alert("Задача обновлена!");
-        } catch (err) {
-            alert("Ошибка при обновлении: " + err.message);
+    const handleDelete = async () => {
+        if (window.confirm("Вы уверены, что хотите удалить задачу?")) {
+            await deleteTask(cardId);
+            alert("Задача удалена");
+            navigate("/");
         }
     };
 
-    if (isLoading) return (
+    if (loading) return (
         <div className="pop-browse">
             <div className="pop-browse__container">
                 <div className="pop-browse__block">
@@ -89,7 +53,7 @@ function PopBrowse({ cardId }) {
         </div>
     );
 
-    if (error || !card) return (
+    if (!card) return (
         <div className="pop-browse">
             <div className="pop-browse__container">
                 <div className="pop-browse__block">

@@ -1,36 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PopUser from "../popups/PopUser/PopUser";
 import PopExit from "../popups/PopExit/PopExit";
 import SContainer from "../Container.styled";
 import { SHeader, SHeaderBlock, SHeaderNav, SHeaderBtnNew, SHeaderUserLink, SHeaderLogo, SHeaderLogoWrapper } from './Header.styled';
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
 
-function Header({ isDarkTheme, onLogout } ) {
+function Header({ isDarkTheme } ) {
 
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [isExitOpen, setIsExitOpen] = useState(false);
-    const [userName, setUserName] = useState("");
+
+    const { user } = useContext(AuthContext);
 
     const handleUserClick = () => setIsUserOpen(prev => !prev);
     const handleLogoutConfirm = () => {
         setIsExitOpen(true);
         setIsUserOpen(false);
     };
-    const handleExit = () => {
-        onLogout();
-        setIsExitOpen(false);
-    };
+    // const handleExit = () => {
+    //     logout();
+    //     setIsExitOpen(false);
+    // };
 
-    useEffect(() => {
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        if (userInfo && userInfo.user && userInfo.user.name) {
-            setUserName(userInfo.user.name);
-        } else if (userInfo && userInfo.name) {
-            setUserName(userInfo.name);
-        } else {
-            setUserName("Пользователь");
-        }
-    }, []);
+    // useEffect(() => {
+    //     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    //     if (userInfo && userInfo.user && userInfo.user.name) {
+    //         setUserName(userInfo.user.name);
+    //     } else if (userInfo && userInfo.name) {
+    //         setUserName(userInfo.name);
+    //     } else {
+    //         setUserName("Пользователь");
+    //     }
+    // }, []);
+
+    const userName = user?.user?.name || user?.name || "Пользователь";
 
     return (
         <SHeader>
@@ -64,7 +68,7 @@ function Header({ isDarkTheme, onLogout } ) {
                 <PopExit
                         isOpen={isExitOpen}
                         onCancel={() => setIsExitOpen(false)}
-                        onConfirm={handleExit}
+                        // onConfirm={handleExit}
                         />
             </SContainer>
         </SHeader>

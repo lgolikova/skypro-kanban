@@ -9,20 +9,16 @@ import {
     Button,
     FormGroup,
 } from "../pages/Login.styled";
-
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { signUp } from "../../src/services/auth"
+import { useState, useContext } from "react";
+import { signUp } from "../../src/services/auth";
+import { AuthContext } from "../../src/context/AuthContext";
 
-function Register({ setIsAuth }) {
-        const [formData, setFormData] = useState({
-            name: "",
-            login: "",
-            password: "",
-        });
-
-        const [error, setError] = useState("");
-        const navigate = useNavigate();
+function Register() {
+    const [formData, setFormData] = useState({ name: "", login: "", password: "" });
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
+    const { setUser } = useContext(AuthContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -34,16 +30,29 @@ function Register({ setIsAuth }) {
         setError("");
 
         try {
-            const user = await signUp(formData);
-            localStorage.setItem("userInfo", JSON.stringify(user));
-            if (setIsAuth) setIsAuth(true);
+            const response = await signUp(formData);
+
+            const userInfo = {
+                user: {
+                    name: response.name,
+                    login: response.login,
+                    imageUrl: response.imageUrl || "",
+                    _id: response._id,
+                },
+                token: response.token,
+            };
+
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+            setUser(userInfo);
+
             navigate("/");
         } catch (err) {
-            setError(err.message);
+            console.error(err);
+            setError(err.message || "Не удалось зарегистрироваться");
         }
     };
 
-        return (
+    return (
         <Wrapper>
             <Container>
                 <Modal>
@@ -52,20 +61,29 @@ function Register({ setIsAuth }) {
                             <h2>Регистрация</h2>
                         </ModalTitle>
                         <Form onSubmit={handleSubmit}>
-                            <Input type="text" name="name" placeholder="Имя" value={formData.name}
-                            onChange={handleChange}
-                            required/>
-                            <Input type="text" name="login" placeholder="Эл.почта"
+                            <Input
+                                type="text"
+                                name="name"
+                                placeholder="Имя"
+                                value={formData.name}
+                                onChange={handleChange}
+                                required
+                            />
+                            <Input
+                                type="text"
+                                name="login"
+                                placeholder="Эл.почта"
                                 value={formData.login}
                                 onChange={handleChange}
-                                required/>
+                                required
+                            />
                             <Input
-                            type="password"
-                            placeholder="Пароль"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            required
+                                type="password"
+                                name="password"
+                                placeholder="Пароль"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
                             />
                             <Button type="submit">Зарегистрироваться</Button>
                             {error && <p style={{ color: "red" }}>{error}</p>}
@@ -78,7 +96,7 @@ function Register({ setIsAuth }) {
                 </Modal>
             </Container>
         </Wrapper>
-        );
-    }
+    );
+}
 
 export default Register;
