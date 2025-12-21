@@ -1,12 +1,13 @@
-import Card from '../Card/Card';
-import { SMainColumn, SColumnTitle, SCards } from './Column.styled';
 import React, { useContext } from "react";
-import { TaskContext } from '../../../src/context/TaskContext';
+import Card from "../Card/Card";
+import { SMainColumn, SColumnTitle, SCards } from "./Column.styled";
+import { TaskContext } from "../../../src/context/TaskContext";
 
 function Column({ status }) {
-    const { tasks } = useContext(TaskContext);
+    const { tasks, updateTask } = useContext(TaskContext);
 
-    const filteredCards = tasks?.filter(card => card?.status === status) || [];
+    const filteredCards =
+        tasks?.filter((card) => card?.status === status) || [];
 
     return (
         <SMainColumn>
@@ -14,18 +15,23 @@ function Column({ status }) {
                 <p>{status}</p>
             </SColumnTitle>
             <SCards>
-            {filteredCards.map(card => (
+                {filteredCards.map((card) => (
                     <Card
                         key={card._id}
                         id={card._id}
                         topic={card.topic}
                         title={card.title}
-                        date={card.date}
+                        date={card.date ? new Date(card.date) : new Date()}
+                        onDateChange={(newDate) =>
+                            updateTask(card._id, {
+                                date: newDate.toISOString(),
+                            })
+                        }
                     />
                 ))}
             </SCards>
         </SMainColumn>
-    )
+    );
 }
 
-export default Column
+export default Column;

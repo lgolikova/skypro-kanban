@@ -2,18 +2,25 @@ import React, { useState, useEffect, useContext } from "react";
 import PopUser from "../popups/PopUser/PopUser";
 import PopExit from "../popups/PopExit/PopExit";
 import SContainer from "../Container.styled";
-import { SHeader, SHeaderBlock, SHeaderNav, SHeaderBtnNew, SHeaderUserLink, SHeaderLogo, SHeaderLogoWrapper } from './Header.styled';
+import {
+    SHeader,
+    SHeaderBlock,
+    SHeaderNav,
+    SHeaderBtnNew,
+    SHeaderUserLink,
+    SHeaderLogo,
+    SHeaderLogoWrapper,
+} from "./Header.styled";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 
-function Header({ isDarkTheme } ) {
-
+function Header({ isDarkTheme }) {
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [isExitOpen, setIsExitOpen] = useState(false);
 
     const { user } = useContext(AuthContext);
 
-    const handleUserClick = () => setIsUserOpen(prev => !prev);
+    const handleUserClick = () => setIsUserOpen((prev) => !prev);
     const handleLogoutConfirm = () => {
         setIsExitOpen(true);
         setIsUserOpen(false);
@@ -47,16 +54,24 @@ function Header({ isDarkTheme } ) {
                     </SHeaderLogoWrapper>
                     <SHeaderLogoWrapper isVisible={isDarkTheme}>
                         <Link to="/">
-                            <SHeaderLogo src="images/logo_dark.png" alt="logo" />
+                            <SHeaderLogo
+                                src="images/logo_dark.png"
+                                alt="logo"
+                            />
                         </Link>
                     </SHeaderLogoWrapper>
 
                     <SHeaderNav>
                         <SHeaderBtnNew>
-                            <Link to={`/new`} style={{ textDecoration: "none" }}>Создать новую задачу</Link>
+                            <Link
+                                to={`/new`}
+                                style={{ textDecoration: "none" }}
+                            >
+                                Создать новую задачу
+                            </Link>
                         </SHeaderBtnNew>
-                        <SHeaderUserLink  onClick={handleUserClick}>
-                        {userName}
+                        <SHeaderUserLink onClick={handleUserClick}>
+                            {userName}
                         </SHeaderUserLink>
                         <PopUser
                             isOpen={isUserOpen}
@@ -66,10 +81,10 @@ function Header({ isDarkTheme } ) {
                     </SHeaderNav>
                 </SHeaderBlock>
                 <PopExit
-                        isOpen={isExitOpen}
-                        onCancel={() => setIsExitOpen(false)}
-                        // onConfirm={handleExit}
-                        />
+                    isOpen={isExitOpen}
+                    onCancel={() => setIsExitOpen(false)}
+                    // onConfirm={handleExit}
+                />
             </SContainer>
         </SHeader>
     );

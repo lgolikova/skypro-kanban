@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     CalendarWrapper,
     CalendarHeader,
@@ -14,12 +14,15 @@ import {
 
 const daysOfWeek = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 
-function Calendar({ onChange = () => {}, disabled }) {
-    // ✅ ОДИН источник правды
-    const [selectedDate, setSelectedDate] = useState(new Date());
+function Calendar({ value, onChange, disabled }) {
+    const [selectedDate, setSelectedDate] = useState(value || new Date());
     const [currentDate, setCurrentDate] = useState(
         new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
     );
+
+    useEffect(() => {
+        if (value) setSelectedDate(value);
+    }, [value]);
 
     const startOfMonth = new Date(
         currentDate.getFullYear(),
@@ -31,12 +34,10 @@ function Calendar({ onChange = () => {}, disabled }) {
         currentDate.getMonth() + 1,
         0
     );
-
     const startDay = (startOfMonth.getDay() + 6) % 7;
     const daysInMonth = endOfMonth.getDate();
 
     const days = [];
-
     for (let i = 0; i < startDay; i++) days.push(null);
     for (let d = 1; d <= daysInMonth; d++) {
         days.push(
@@ -52,9 +53,10 @@ function Calendar({ onChange = () => {}, disabled }) {
         a.getDate() === b.getDate();
 
     const handleDayClick = (day) => {
-        if (disabled) return;
-        setSelectedDate(day);
-        onChange(day);
+        if (!disabled) {
+            setSelectedDate(day);
+            onChange(day);
+        }
     };
 
     return (
@@ -67,7 +69,6 @@ function Calendar({ onChange = () => {}, disabled }) {
                             year: "numeric",
                         })
                         .replace(/^./, (s) => s.toUpperCase())}
-
                     <div style={{ display: "flex", gap: 6 }}>
                         <Button
                             onClick={() =>

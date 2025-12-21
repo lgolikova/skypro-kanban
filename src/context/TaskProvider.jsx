@@ -1,7 +1,12 @@
 import { useContext, useState, useEffect, useCallback } from "react";
 import { TaskContext } from "./TaskContext";
 import { AuthContext } from "./AuthContext";
-import { getTasks, addTask as apiAddTask, updateTask as apiUpdateTask, deleteTask as apiDeleteTask } from "../services/api";
+import {
+    getTasks,
+    addTask as apiAddTask,
+    updateTask as apiUpdateTask,
+    deleteTask as apiDeleteTask,
+} from "../services/api";
 
 const TaskProvider = ({ children }) => {
     const { user } = useContext(AuthContext);
@@ -44,12 +49,16 @@ const TaskProvider = ({ children }) => {
 
     const updateTask = async (id, taskData) => {
         if (!user?.token) return;
+
+        // Сразу обновляем локально
+        setTasks((prev) =>
+            prev.map((t) => (t._id === id ? { ...t, ...taskData } : t))
+        );
+
         try {
-            const tasksFromAPI = await apiUpdateTask(user.token, id, taskData);
-            setTasks(tasksFromAPI || []);
+            await apiUpdateTask(user.token, id, taskData);
         } catch (err) {
             console.error("Ошибка обновления задачи:", err);
-            throw err;
         }
     };
 
@@ -81,5 +90,3 @@ const TaskProvider = ({ children }) => {
 };
 
 export default TaskProvider;
-
-
