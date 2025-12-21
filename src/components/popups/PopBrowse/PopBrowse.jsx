@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Calendar from "../../Calendar/Calendar";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../theme";
@@ -9,15 +9,22 @@ function PopBrowse({ cardId }) {
 
     const [card, setCard] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
-
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [topic, setTopic] = useState("");
+    const [status, setStatus] = useState("");
     const [date, setDate] = useState(new Date());
 
     const navigate = useNavigate();
 
     const topics = ["Web Design", "Research", "Copywriting"];
+    const STATUSES = [
+        "Без статуса",
+        "Нужно сделать",
+        "В работе",
+        "Тестирование",
+        "Готово",
+    ];
 
     useEffect(() => {
         const task = tasks.find((t) => t._id === cardId);
@@ -26,6 +33,7 @@ function PopBrowse({ cardId }) {
             setTitle(task.title);
             setDescription(task.description);
             setTopic(task.topic);
+            setStatus(task.status || "Без статуса");
             setDate(task.date ? new Date(task.date) : new Date());
         }
     }, [tasks, cardId]);
@@ -35,6 +43,7 @@ function PopBrowse({ cardId }) {
             title,
             description,
             topic,
+            status,
             date: date.toISOString(),
         });
         setIsEditing(false);
@@ -44,11 +53,12 @@ function PopBrowse({ cardId }) {
     const handleDelete = async () => {
         if (window.confirm("Вы уверены, что хотите удалить задачу?")) {
             await deleteTask(cardId);
+            alert("Задача удалена");
             navigate("/");
         }
     };
 
-    if (loading) {
+    if (loading)
         return (
             <div className="pop-browse">
                 <div className="pop-browse__container">
@@ -58,9 +68,18 @@ function PopBrowse({ cardId }) {
                 </div>
             </div>
         );
-    }
 
-    if (!card) return null;
+    if (!card)
+        return (
+            <div className="pop-browse">
+                <div className="pop-browse__container">
+                    <div className="pop-browse__block">
+                        <p>Карточка не найдена</p>
+                        <button onClick={() => navigate("/")}>Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        );
 
     const cardTheme = theme.topics[topic.toLowerCase()] || theme.topics.default;
 
@@ -111,9 +130,25 @@ function PopBrowse({ cardId }) {
                         <div className="pop-browse__status status">
                             <p className="status__p subttl">Статус</p>
                             <div className="status__themes">
-                                <div className="status__theme">
-                                    <p>{card.status}</p>
-                                </div>
+                                {isEditing ? (
+                                    STATUSES.map((s) => (
+                                        <div
+                                            key={s}
+                                            className={`status__theme ${
+                                                s === status
+                                                    ? "_active-status"
+                                                    : ""
+                                            }`}
+                                            onClick={() => setStatus(s)}
+                                        >
+                                            <p>{s}</p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="status__theme">
+                                        <p>{card.status}</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -136,11 +171,12 @@ function PopBrowse({ cardId }) {
 
                             <Calendar
                                 value={date}
-                                onChange={setDate}
+                                onChange={isEditing ? setDate : undefined}
                                 disabled={!isEditing}
                             />
                         </div>
 
+                        {/* Кнопки */}
                         <div className="pop-browse__btn-browse">
                             <div className="btn-group">
                                 {isEditing ? (
@@ -159,6 +195,7 @@ function PopBrowse({ cardId }) {
                                                     card.description
                                                 );
                                                 setTopic(card.topic);
+                                                setStatus(card.status);
                                                 setDate(
                                                     card.date
                                                         ? new Date(card.date)

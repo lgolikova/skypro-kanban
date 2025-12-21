@@ -14,8 +14,8 @@ import {
 
 const daysOfWeek = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 
-function Calendar({ value, onChange }) {
-    const selectedDate = value instanceof Date ? value : new Date();
+function Calendar({ value, onChange, disabled }) {
+    const selectedDate = value instanceof Date ? value : new Date(value);
 
     const [currentDate, setCurrentDate] = useState(
         new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
@@ -57,7 +57,8 @@ function Calendar({ value, onChange }) {
         a.getDate() === b.getDate();
 
     const handleDayClick = (day) => {
-        onChange(day);
+        if (disabled) return;
+        onChange?.(day);
     };
 
     return (
@@ -71,34 +72,36 @@ function Calendar({ value, onChange }) {
                         })
                         .replace(/^./, (s) => s.toUpperCase())}
 
-                    <div style={{ display: "flex", gap: 6 }}>
-                        <Button
-                            onClick={() =>
-                                setCurrentDate(
-                                    new Date(
-                                        currentDate.getFullYear(),
-                                        currentDate.getMonth() - 1,
-                                        1
+                    {!disabled && (
+                        <div style={{ display: "flex", gap: 6 }}>
+                            <Button
+                                onClick={() =>
+                                    setCurrentDate(
+                                        new Date(
+                                            currentDate.getFullYear(),
+                                            currentDate.getMonth() - 1,
+                                            1
+                                        )
                                     )
-                                )
-                            }
-                        >
-                            ❮
-                        </Button>
-                        <Button
-                            onClick={() =>
-                                setCurrentDate(
-                                    new Date(
-                                        currentDate.getFullYear(),
-                                        currentDate.getMonth() + 1,
-                                        1
+                                }
+                            >
+                                ❮
+                            </Button>
+                            <Button
+                                onClick={() =>
+                                    setCurrentDate(
+                                        new Date(
+                                            currentDate.getFullYear(),
+                                            currentDate.getMonth() + 1,
+                                            1
+                                        )
                                     )
-                                )
-                            }
-                        >
-                            ❯
-                        </Button>
-                    </div>
+                                }
+                            >
+                                ❯
+                            </Button>
+                        </div>
+                    )}
                 </MonthYear>
             </CalendarHeader>
 
@@ -114,6 +117,7 @@ function Calendar({ value, onChange }) {
                         <Day
                             key={i}
                             $isSelected={isSameDay(day, selectedDate)}
+                            $disabled={disabled}
                             onClick={() => handleDayClick(day)}
                         >
                             {day.getDate()}
