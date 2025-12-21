@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     CalendarWrapper,
     CalendarHeader,
@@ -14,15 +14,18 @@ import {
 
 const daysOfWeek = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"];
 
-function Calendar({ value, onChange, disabled }) {
-    const [selectedDate, setSelectedDate] = useState(value || new Date());
+function Calendar({ value, onChange }) {
+    const selectedDate = value instanceof Date ? value : new Date();
+
     const [currentDate, setCurrentDate] = useState(
         new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
     );
 
     useEffect(() => {
-        if (value) setSelectedDate(value);
-    }, [value]);
+        setCurrentDate(
+            new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1)
+        );
+    }, [selectedDate]);
 
     const startOfMonth = new Date(
         currentDate.getFullYear(),
@@ -34,6 +37,7 @@ function Calendar({ value, onChange, disabled }) {
         currentDate.getMonth() + 1,
         0
     );
+
     const startDay = (startOfMonth.getDay() + 6) % 7;
     const daysInMonth = endOfMonth.getDate();
 
@@ -53,10 +57,7 @@ function Calendar({ value, onChange, disabled }) {
         a.getDate() === b.getDate();
 
     const handleDayClick = (day) => {
-        if (!disabled) {
-            setSelectedDate(day);
-            onChange(day);
-        }
+        onChange(day);
     };
 
     return (
@@ -69,6 +70,7 @@ function Calendar({ value, onChange, disabled }) {
                             year: "numeric",
                         })
                         .replace(/^./, (s) => s.toUpperCase())}
+
                     <div style={{ display: "flex", gap: 6 }}>
                         <Button
                             onClick={() =>

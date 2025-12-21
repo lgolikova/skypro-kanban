@@ -21,7 +21,7 @@ function Column({ status }) {
                         id={card._id}
                         topic={card.topic}
                         title={card.title}
-                        date={card.date ? new Date(card.date) : new Date()}
+                        date={card.date}
                         onDateChange={(newDate) =>
                             updateTask(card._id, {
                                 date: newDate.toISOString(),

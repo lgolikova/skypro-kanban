@@ -50,7 +50,6 @@ const TaskProvider = ({ children }) => {
     const updateTask = async (id, taskData) => {
         if (!user?.token) return;
 
-        // Сразу обновляем локально
         setTasks((prev) =>
             prev.map((t) => (t._id === id ? { ...t, ...taskData } : t))
         );
