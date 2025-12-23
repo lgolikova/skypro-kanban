@@ -186,6 +186,13 @@
     line-height: 14px;
     white-space: nowrap;
 }
+.categories__theme select {
+    border: none;
+    background-color: transparent;
+    transform: translateY(-3px);
+    font-size: 14px;
+    font-weight: 600;
+}
 
 .pop-browse {
     /* display: none; */
@@ -250,6 +257,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    gap: 21px;
 }
 .pop-browse__form {
     max-width: 370px;
@@ -273,6 +281,10 @@
 .pop-browse__btn-browse .btn-group button,
 .pop-browse__btn-edit .btn-group button {
     margin-right: 8px;
+}
+
+.pop-browse__btn-browse {
+    margin-top: 18px;
 }
 
 .form-browse__block {

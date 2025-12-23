@@ -88,6 +88,7 @@ function PopBrowse({ cardId }) {
             <div className="pop-browse__container">
                 <div className="pop-browse__block">
                     <div className="pop-browse__content">
+                        {/* Заголовок и тема */}
                         <div className="pop-browse__top-block">
                             {isEditing ? (
                                 <input
@@ -127,6 +128,7 @@ function PopBrowse({ cardId }) {
                             </div>
                         </div>
 
+                        {/* Статус */}
                         <div className="pop-browse__status status">
                             <p className="status__p subttl">Статус</p>
                             <div className="status__themes">
@@ -134,24 +136,36 @@ function PopBrowse({ cardId }) {
                                     STATUSES.map((s) => (
                                         <div
                                             key={s}
-                                            className={`status__theme ${
-                                                s === status
-                                                    ? "_active-status"
-                                                    : ""
-                                            }`}
+                                            className="status__theme"
                                             onClick={() => setStatus(s)}
+                                            style={
+                                                s === status
+                                                    ? {
+                                                          backgroundColor:
+                                                              "#94A6BE",
+                                                          color: "#fff",
+                                                      }
+                                                    : {}
+                                            }
                                         >
                                             <p>{s}</p>
                                         </div>
                                     ))
                                 ) : (
-                                    <div className="status__theme">
+                                    <div
+                                        className="status__theme"
+                                        style={{
+                                            backgroundColor: "#94A6BE",
+                                            color: "#fff",
+                                        }}
+                                    >
                                         <p>{card.status}</p>
                                     </div>
                                 )}
                             </div>
                         </div>
 
+                        {/* Описание и календарь */}
                         <div className="pop-browse__wrap">
                             {isEditing ? (
                                 <textarea
