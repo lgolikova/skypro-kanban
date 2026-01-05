@@ -83,6 +83,9 @@
     color: #94a6be;
     cursor: pointer;
 }
+.pop-new-card__wrap {
+    gap: 20px;
+}
 .pop-new-card__close:hover {
     color: #000000;
 }
@@ -343,6 +346,7 @@
     padding: 11px 14px 10px;
     margin-right: 7px;
     margin-bottom: 7px;
+    cursor: pointer;
 }
 .status__theme p {
     font-size: 14px;
