@@ -71,14 +71,6 @@ export const SCardDate = styled.div`
         width: 13px;
         margin-right: 6px;
     }
-
-    /* p {
-        margin-left: 6px;
-        font-size: 10px;
-        line-height: 13px;
-        color: #94a6be;
-        letter-spacing: 0.2px;
-    } */
 `;
 
 export const SCardBtn = styled.div`
