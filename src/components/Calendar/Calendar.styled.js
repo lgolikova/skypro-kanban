@@ -1,144 +1,96 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-export const SCalendar = styled.div`
-    width: 182px;
-    margin-bottom: 20px;
-`;
-
-export const SCalendarTitle = styled.p`
-    margin-bottom: 14px;
-    padding: 0 7px;
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1;
-`;
-
-export const SCalendarBlock = styled.div`
-    display: block;
-`;
-
-export const SCalendarNav = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 14px;
-    padding: 0 7px;
-`;
-
-export const SCalendarMonth = styled.div`
+export const CalendarWrapper = styled.div`
+    width: 200px;
+    font-family: "Roboto", sans-serif;
     color: #94a6be;
-    font-size: 14px;
-    line-height: 25px;
-    font-weight: 600;
+    user-select: none;
 `;
 
-export const SNavActions = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+export const CalendarHeader = styled.div`
+    margin-bottom: 8px;
 `;
 
-export const SNavAction = styled.div`
-    width: 18px;
-    height: 25px;
+export const Button = styled.button`
+    background: transparent;
+    border: none;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    font-size: 14px;
+    color: #94a6be;
 
-    svg {
-        fill: #94a6be;
+    &:hover {
+        color: #565eef;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
     }
 `;
 
-export const SCalendarContent = styled.div`
-    margin-bottom: 12px;
-`;
-
-export const SCalendarDaysNames = styled.div`
+export const MonthYear = styled.div`
+    font-weight: 600;
+    font-size: 14px;
     display: flex;
     align-items: center;
+    gap: 8px;
+`;
+
+export const DaysOfWeek = styled.div`
+    display: flex;
     justify-content: space-between;
-    margin: 7px 0;
-    padding: 0 7px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 6px;
 `;
 
-export const SCalendarDayName = styled.div`
-    color: ${({ weekend }) => (weekend ? "#94a6be" : "#94a6be")};
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: -0.2px;
-
-    ${({ weekend }) =>
-        weekend &&
-        css`
-            opacity: 0.7;
-        `}
+export const DaysOfWeekItem = styled.div`
+    width: 28px;
+    text-align: center;
 `;
 
-export const SCalendarCells = styled.div`
-    width: 182px;
-    height: 126px;
+export const DaysGrid = styled.div`
     display: flex;
     flex-wrap: wrap;
 `;
 
-export const SCalendarCell = styled.div`
-    width: 22px;
-    height: 22px;
-    margin: 2px;
+export const Day = styled.div`
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
     border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    line-height: 1;
-    letter-spacing: -0.2px;
     cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
     color: #94a6be;
-    transition: all 0.2s ease-in-out;
 
-    ${({ other }) =>
-        other &&
-        css`
-            opacity: 0;
-            pointer-events: none;
-        `}
+    ${({ $isToday }) =>
+        $isToday &&
+        `
+        font-weight: bold;
+    `}
 
-    ${({ weekend }) =>
-        weekend &&
-        css`
-            color: #94a6be;
-        `}
-
-    ${({ current }) =>
-        current &&
-        css`
-            font-weight: 700;
-        `}
+    ${({ $isSelected }) =>
+        $isSelected &&
+        `
+        background-color: #94a6be;
+        color: #ffffff;
+    `}
 
     &:hover {
-        background-color: #eaeef6;
-        color: #94a6be;
-    }
-
-    &.active {
         background-color: #94a6be;
         color: #ffffff;
     }
 `;
 
-export const SCalendarPeriod = styled.div`
-    padding: 0 7px;
+export const EmptyDay = styled.div`
+    width: 28px;
+    height: 28px;
+`;
 
-    p {
-        color: #94a6be;
-        font-size: 10px;
-        line-height: 1;
-
-        span {
-            color: #000000;
-        }
-    }
+export const FooterText = styled.div`
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 500;
 `;

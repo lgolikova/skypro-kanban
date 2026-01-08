@@ -3,39 +3,26 @@ import { AuthContext } from "./AuthContext";
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        try {
         const storedUser = localStorage.getItem("userInfo");
-        if (storedUser) {
-            setUser(JSON.parse(storedUser));
-        }
-        } catch (error) {
-        console.error("Ошибка при загрузке userInfo из localStorage:", error);
-        }
+        if (storedUser) setUser(JSON.parse(storedUser));
+        setLoading(false);
     }, []);
 
-    const updateUserInfo = (userData) => {
-        setUser(userData);
-        if (userData) {
-        localStorage.setItem("userInfo", JSON.stringify(userData));
-        } else {
-        localStorage.removeItem("userInfo");
-        }
-    };
-
     const login = (userData) => {
-        updateUserInfo(userData);
-        return true;
+        setUser(userData);
+        localStorage.setItem("userInfo", JSON.stringify(userData));
     };
 
     const logout = () => {
-        updateUserInfo(null);
-        return true;
+        setUser(null);
+        localStorage.removeItem("userInfo");
     };
 
     return (
-        <AuthContext.Provider value={{ user, setUser, login, logout, updateUserInfo }}>
+        <AuthContext.Provider value={{ user, login, logout, loading }}>
             {children}
         </AuthContext.Provider>
     );
