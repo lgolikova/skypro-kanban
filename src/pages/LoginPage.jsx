@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { signIn } from "../services/auth";
 import { AuthContext } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 import {
     Wrapper,
@@ -39,10 +40,12 @@ function Login() {
             const userData = await signIn(formData);
 
             login(userData);
+            toast.success("Вы вошли в систему!");
 
             navigate("/", { replace: true });
         } catch (err) {
             setError(err.message || "Ошибка авторизации");
+            toast.error(err.message || "Ошибка авторизации");
         }
     };
 

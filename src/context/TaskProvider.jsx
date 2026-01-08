@@ -5,6 +5,7 @@ import {
     getTasks,
     addTask as apiAddTask,
     updateTask as apiUpdateTask,
+    deleteTask as apiDeleteTask,
 } from "../services/api";
 
 const TaskProvider = ({ children }) => {
@@ -16,7 +17,6 @@ const TaskProvider = ({ children }) => {
 
     useEffect(() => {
         if (authLoading) return;
-
         if (!user || !user.token) {
             setTasks([]);
             setLoading(false);
@@ -37,22 +37,20 @@ const TaskProvider = ({ children }) => {
         };
 
         fetchTasks();
-    }, [user, authLoading]);
+    }, [user?.token, authLoading]);
 
     const addTask = useCallback(
         async (taskData) => {
-            if (!user || !user.token)
-                throw new Error("Пользователь не авторизован");
+            if (!user?.token) throw new Error("Пользователь не авторизован");
             const newTasks = await apiAddTask(user.token, taskData);
             setTasks(newTasks);
         },
-        [user]
+        [user?.token]
     );
 
     const updateTask = useCallback(
         async (taskId, updatedFields) => {
-            if (!user || !user.token)
-                throw new Error("Пользователь не авторизован");
+            if (!user?.token) throw new Error("Пользователь не авторизован");
             const newTasks = await apiUpdateTask(
                 user.token,
                 taskId,
@@ -60,12 +58,21 @@ const TaskProvider = ({ children }) => {
             );
             setTasks(newTasks);
         },
-        [user]
+        [user?.token]
+    );
+
+    const deleteTask = useCallback(
+        async (taskId) => {
+            if (!user?.token) throw new Error("Пользователь не авторизован");
+            const newTasks = await apiDeleteTask(user.token, taskId);
+            setTasks(newTasks);
+        },
+        [user?.token]
     );
 
     return (
         <TaskContext.Provider
-            value={{ tasks, loading, error, addTask, updateTask }}
+            value={{ tasks, loading, error, addTask, updateTask, deleteTask }}
         >
             {children}
         </TaskContext.Provider>

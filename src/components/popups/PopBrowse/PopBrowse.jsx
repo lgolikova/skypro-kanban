@@ -3,8 +3,12 @@ import Calendar from "../../Calendar/Calendar";
 import { useNavigate } from "react-router-dom";
 import { theme } from "../../theme";
 import { TaskContext } from "../../../context/TaskContext";
+import { toast } from "react-toastify";
+import { AuthContext } from "../../../context/AuthContext";
 
 function PopBrowse({ cardId }) {
+    const { user } = useContext(AuthContext);
+
     const { tasks, updateTask, deleteTask, loading } = useContext(TaskContext);
 
     const [card, setCard] = useState(null);
@@ -47,15 +51,72 @@ function PopBrowse({ cardId }) {
             date: date.toISOString(),
         });
         setIsEditing(false);
-        alert("Задача обновлена!");
+        toast.success("Задача обновлена!");
     };
 
+    // const handleDelete = async () => {
+    //     if (window.confirm("Вы уверены, что хотите удалить задачу?")) {
+    //         await deleteTask(cardId);
+    //         toast.success("Задача удалена");
+    //         navigate("/");
+    //     }
+    // };
     const handleDelete = async () => {
-        if (window.confirm("Вы уверены, что хотите удалить задачу?")) {
-            await deleteTask(cardId);
-            alert("Задача удалена");
-            navigate("/");
-        }
+        const ToastDelete = ({ closeToast }) => (
+            <div>
+                <p>Вы уверены, что хотите удалить задачу?</p>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        gap: "10px",
+                        marginTop: "5px",
+                    }}
+                >
+                    <button
+                        onClick={async () => {
+                            try {
+                                // НЕ передаем user.token, берется из TaskContext
+                                await deleteTask(cardId);
+                                toast.success("Задача удалена");
+                                navigate("/");
+                            } catch (err) {
+                                toast.error("Не удалось удалить задачу");
+                                console.error(err);
+                            }
+                            closeToast();
+                        }}
+                        style={{
+                            background: "red",
+                            color: "#fff",
+                            border: "none",
+                            padding: "3px 8px",
+                            borderRadius: "3px",
+                        }}
+                    >
+                        Да
+                    </button>
+                    <button
+                        onClick={closeToast}
+                        style={{
+                            background: "#ccc",
+                            color: "#000",
+                            border: "none",
+                            padding: "3px 8px",
+                            borderRadius: "3px",
+                        }}
+                    >
+                        Отмена
+                    </button>
+                </div>
+            </div>
+        );
+
+        toast.info(<ToastDelete />, {
+            autoClose: false,
+            closeOnClick: false,
+            closeButton: false,
+        });
     };
 
     if (loading)

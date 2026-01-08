@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import Calendar from "../../Calendar/Calendar";
 import { useNavigate } from "react-router-dom";
 import { TaskContext } from "../../../context/TaskContext";
+import { toast } from "react-toastify";
 
 function PopNewCard() {
     const navigate = useNavigate();
@@ -25,10 +26,11 @@ function PopNewCard() {
 
         try {
             await addTask(newTask);
+            toast.success("Задача успешно создана!");
             navigate("/");
         } catch (err) {
             console.error(err);
-            alert("Не удалось создать задачу");
+            toast.error("Не удалось создать задачу");
         }
     };
 
