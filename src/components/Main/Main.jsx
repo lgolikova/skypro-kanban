@@ -10,7 +10,7 @@ import {
 import { TaskContext } from "../../context/TaskContext";
 
 function Main() {
-    const { tasks, loading, error, updateTask } = useContext(TaskContext);
+    const { tasks, loading, error } = useContext(TaskContext);
 
     const statuses = [
         "Без статуса",
@@ -20,7 +20,7 @@ function Main() {
         "Готово",
     ];
 
-    if (loading) {
+    if (loading)
         return (
             <SMain>
                 <SContainer>
@@ -28,9 +28,7 @@ function Main() {
                 </SContainer>
             </SMain>
         );
-    }
-
-    if (error) {
+    if (error)
         return (
             <SMain>
                 <SContainer>
@@ -38,7 +36,6 @@ function Main() {
                 </SContainer>
             </SMain>
         );
-    }
 
     return (
         <SMain>
@@ -46,13 +43,7 @@ function Main() {
                 <SMainBlock>
                     <SMainContent>
                         {statuses.map((status) => (
-                            <Column
-                                key={status}
-                                title={status}
-                                status={status}
-                                tasks={tasks}
-                                updateTask={updateTask}
-                            />
+                            <Column key={status} status={status} />
                         ))}
                     </SMainContent>
                 </SMainBlock>

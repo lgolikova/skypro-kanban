@@ -7,16 +7,14 @@ import TaskProvider from "./context/TaskProvider";
 
 function App() {
     return (
-        <>
-            <AuthProvider>
-                <TaskProvider>
-                    <SWrapper>
-                        <GlobalStyles />
-                        <AppRoutes />
-                    </SWrapper>
-                </TaskProvider>
-            </AuthProvider>
-        </>
+        <AuthProvider>
+            <TaskProvider>
+                <SWrapper>
+                    <GlobalStyles />
+                    <AppRoutes />
+                </SWrapper>
+            </TaskProvider>
+        </AuthProvider>
     );
 }
 

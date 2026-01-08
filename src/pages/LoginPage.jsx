@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import { signIn } from "../../src/services/auth";
-import { AuthContext } from '../context/AuthContext';
+import { signIn } from "../services/auth";
+import { AuthContext } from "../context/AuthContext";
+
 import {
     Wrapper,
     Container,
@@ -13,9 +13,9 @@ import {
     Input,
     Button,
     FormGroup,
-} from "../pages/Login.styled";
+} from "./Login.styled";
 
-function Login({ setIsAuth }) {
+function Login() {
     const [formData, setFormData] = useState({
         login: "",
         password: "",
@@ -36,12 +36,13 @@ function Login({ setIsAuth }) {
         setError("");
 
         try {
-            const user = await signIn(formData);
-            login(user);
-            if (setIsAuth) setIsAuth(true);
-            navigate("/");
+            const userData = await signIn(formData);
+
+            login(userData);
+
+            navigate("/", { replace: true });
         } catch (err) {
-            setError(err.message);
+            setError(err.message || "Ошибка авторизации");
         }
     };
 
@@ -51,10 +52,11 @@ function Login({ setIsAuth }) {
                 <Modal>
                     <ModalBlock>
                         <ModalTitle>
-                        <h2>Вход</h2>
+                            <h2>Вход</h2>
                         </ModalTitle>
+
                         <Form onSubmit={handleSubmit}>
-                        <Input
+                            <Input
                                 type="text"
                                 name="login"
                                 placeholder="Эл. почта"
@@ -62,16 +64,24 @@ function Login({ setIsAuth }) {
                                 onChange={handleChange}
                                 required
                             />
+
                             <Input
                                 type="password"
-                                placeholder="Пароль"
                                 name="password"
+                                placeholder="Пароль"
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
                             />
+
                             <Button type="submit">Войти</Button>
-                            {error && <p style={{ color: "red" }}>{error}</p>}
+
+                            {error && (
+                                <p style={{ color: "red", marginTop: "10px" }}>
+                                    {error}
+                                </p>
+                            )}
+
                             <FormGroup>
                                 <Link to="/register">Зарегистрироваться</Link>
                             </FormGroup>

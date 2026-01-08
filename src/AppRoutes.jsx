@@ -1,5 +1,5 @@
 import { Routes, Route, Outlet, Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
 
 import MainPage from "./pages/MainPage";
 import CardPage from "./pages/CardPage";
@@ -9,30 +9,29 @@ import NotFoundPage from "./pages/NotFoundPage";
 import Login from "./pages/LoginPage";
 import Register from "./pages/RegisterPage";
 
+import { AuthContext } from "./context/AuthContext";
+
 export default function AppRoutes() {
-    const [isAuth, setIsAuth] = useState(false);
+    const { user, loading } = useContext(AuthContext);
 
     const PrivateRoute = () => {
-        return isAuth ? <Outlet /> : <Navigate to="/login" replace />;
+        if (loading) return <div>Загрузка...</div>;
+        return user ? <Outlet /> : <Navigate to="/login" replace />;
     };
 
-    const [isDarkTheme, setIsDarkTheme] = useState(false);
-
     return (
-            <Routes>
-                <Route element={<PrivateRoute />}>
-                    <Route path="/" element={<MainPage isDarkTheme={false} onLogout={() => setIsAuth(false)} />} >
-                        <Route path="card/:id" element={<CardPage />} />
-                        <Route path="new" element={<NewCardPage />} />
-                        <Route path="exit" element={<ExitPage setIsAuth={setIsAuth} />} />
-                    </Route>
+        <Routes>
+            <Route element={<PrivateRoute />}>
+                <Route path="/" element={<MainPage />}>
+                    <Route path="card/:id" element={<CardPage />} />
+                    <Route path="new" element={<NewCardPage />} />
+                    <Route path="exit" element={<ExitPage />} />
                 </Route>
+            </Route>
 
-                <Route path="/login" element={<Login setIsAuth={setIsAuth} />} />
-                <Route path="/register" element={<Register setIsAuth={setIsAuth}/>} />
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="*" element={<NotFoundPage />} />
+        </Routes>
     );
 }
-
-
