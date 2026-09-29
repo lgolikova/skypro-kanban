@@ -1,16 +1,27 @@
-# React + Vite
+# Skypro-kanban
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React-приложение для управления задачами с авторизацией, регистрацией и Kanban-доской.
 
-Currently, two official plugins are available:
+## Основные функции
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   Авторизация и регистрация
+-   Создание задач
+-   Редактирование задач
+-   Удаление задач
+-   Страница 404
 
-## React Compiler
+## Установка и запуск
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+-   Склонируйте репозиторий: git clone <repository-url>
+-   Установите зависимости: npm install
+-   Запустите приложение: npm start
+-   Для форматирования кода: npm run format
 
-## Expanding the ESLint configuration
+## Используемые технологии
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-   React, React Router, Styled-Components
+-   Axios для API-запросов
+
+## API
+
+Приложение взаимодействует с API https://wedev-api.sky.pro/api/

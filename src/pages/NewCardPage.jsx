@@ -1,15 +1,13 @@
 import React from "react";
-import PopNewCard from '../components/popups/PopNewCard/PopNewCard';
+import PopNewCard from "../components/popups/PopNewCard/PopNewCard";
 import { addTask } from "../../src/services/api";
 import { useNavigate } from "react-router-dom";
 
 function NewCardPage({ token }) {
     const navigate = useNavigate();
-    // const token = "ksdfsksdfjfsdjk";
 
     const handleAddTask = async (newTaskData) => {
         try {
-
             const userInfo = JSON.parse(localStorage.getItem("userInfo"));
             const token = userInfo?.token;
 
@@ -29,7 +27,7 @@ function NewCardPage({ token }) {
 
     return (
         <>
-            <PopNewCard onSubmit={handleAddTask}/>
+            <PopNewCard onSubmit={handleAddTask} />
         </>
     );
 }

@@ -9,16 +9,23 @@ import {
     Button,
     FormGroup,
 } from "../pages/Login.styled";
+
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { signUp } from "../../src/services/auth";
 import { AuthContext } from "../../src/context/AuthContext";
 
 function Register() {
-    const [formData, setFormData] = useState({ name: "", login: "", password: "" });
+    const [formData, setFormData] = useState({
+        name: "",
+        login: "",
+        password: "",
+    });
+
     const [error, setError] = useState("");
     const navigate = useNavigate();
-    const { setUser } = useContext(AuthContext);
+
+    const { login } = useContext(AuthContext);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -42,9 +49,7 @@ function Register() {
                 token: response.token,
             };
 
-            localStorage.setItem("userInfo", JSON.stringify(userInfo));
-            setUser(userInfo);
-
+            login(userInfo);
             navigate("/");
         } catch (err) {
             console.error(err);
@@ -60,6 +65,7 @@ function Register() {
                         <ModalTitle>
                             <h2>Регистрация</h2>
                         </ModalTitle>
+
                         <Form onSubmit={handleSubmit}>
                             <Input
                                 type="text"
@@ -69,14 +75,16 @@ function Register() {
                                 onChange={handleChange}
                                 required
                             />
+
                             <Input
                                 type="text"
                                 name="login"
-                                placeholder="Эл.почта"
+                                placeholder="Эл. почта"
                                 value={formData.login}
                                 onChange={handleChange}
                                 required
                             />
+
                             <Input
                                 type="password"
                                 name="password"
@@ -85,8 +93,15 @@ function Register() {
                                 onChange={handleChange}
                                 required
                             />
+
                             <Button type="submit">Зарегистрироваться</Button>
-                            {error && <p style={{ color: "red" }}>{error}</p>}
+
+                            {error && (
+                                <p style={{ color: "red", marginTop: 10 }}>
+                                    {error}
+                                </p>
+                            )}
+
                             <FormGroup>
                                 <p>Уже есть аккаунт?</p>
                                 <Link to="/login">Войдите здесь</Link>

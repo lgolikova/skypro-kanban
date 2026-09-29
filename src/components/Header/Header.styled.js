@@ -80,7 +80,7 @@ export const SHeaderLogo = styled.img`
 `;
 
 export const SHeaderLogoWrapper = styled.div`
-    display: ${(props) => (props.isVisible ? "block" : "none")};
+    display: block;
 
     a {
         display: inline-block;

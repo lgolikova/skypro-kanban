@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const SPopUserSet = styled.div`
-    /* display: none; */
     position: absolute;
     top: 61px;
     right: 0;
